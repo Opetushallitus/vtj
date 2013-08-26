@@ -29,6 +29,11 @@
             <artifactId>vtj-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>fi.vm.sade.rajapinnat</groupId>
+            <artifactId>vtj-remote-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>fi.vm.sade.generic</groupId>

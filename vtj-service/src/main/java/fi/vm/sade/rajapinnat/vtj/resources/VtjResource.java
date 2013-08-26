@@ -1,6 +1,7 @@
 package fi.vm.sade.rajapinnat.vtj.resources;
 
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
+import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,13 @@ public class VtjResource {
     private VtjService vtjService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     @Path("{hetu}")
     public Response teeHenkiloKysely(@PathParam("hetu") String hetu) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            VTJHenkiloVastaussanoma vastaussanoma = vtjService.teeHenkiloKysely(authentication.getName(), hetu);
-            return Response.ok(vastaussanoma).build();
+            YksiloityHenkilo yksiloityHenkilo = vtjService.teeHenkiloKysely(authentication.getName(), hetu);
+            return Response.ok(yksiloityHenkilo).header("", "").build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

@@ -16,6 +16,7 @@
 
     <modules>
         <module>vtj-api</module>
+        <module>vtj-remote-api</module>
         <module>vtj-service</module>
     </modules>
 </project>
