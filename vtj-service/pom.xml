@@ -16,7 +16,7 @@
 
     <properties>
         <deploy.to.server>tomcat</deploy.to.server>
-        <webapp.port>8082</webapp.port>
+        <webapp.port>8081</webapp.port>
     </properties>
 
     <build>

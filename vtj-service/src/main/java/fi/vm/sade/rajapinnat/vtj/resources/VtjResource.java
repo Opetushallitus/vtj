@@ -10,10 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -31,13 +28,14 @@ public class VtjResource {
     private VtjService vtjService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{hetu}")
     public Response teeHenkiloKysely(@PathParam("hetu") String hetu) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             YksiloityHenkilo yksiloityHenkilo = vtjService.teeHenkiloKysely(authentication.getName(), hetu);
-            return Response.ok(yksiloityHenkilo).header("", "").build();
+            return Response.ok(yksiloityHenkilo).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
