@@ -7,7 +7,7 @@
     <parent>
         <groupId>fi.vm.sade.rajapinnat</groupId>
         <artifactId>vtj</artifactId>
-        <version>6.3-SNAPSHOT</version>
+        <version>7.0-SNAPSHOT</version>
     </parent>
 
     <groupId>fi.vm.sade.rajapinnat</groupId>
@@ -38,12 +38,12 @@
         <dependency>
             <groupId>fi.vm.sade.generic</groupId>
             <artifactId>generic-common</artifactId>
-            <version>${project.version}</version>
+            <version>7.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>fi.vm.sade.generic</groupId>
             <artifactId>dependencies-service</artifactId>
-            <version>${project.version}</version>
+            <version>7.0-SNAPSHOT</version>
             <type>pom</type>
         </dependency>
 
