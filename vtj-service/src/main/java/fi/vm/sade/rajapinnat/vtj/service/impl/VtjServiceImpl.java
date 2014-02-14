@@ -1,12 +1,16 @@
 package fi.vm.sade.rajapinnat.vtj.service.impl;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.tempuri.SoSoSoap;
+import org.tempuri.TeeHenkilonTunnusKyselyResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma;
-import org.springframework.cache.annotation.Cacheable;
-import org.tempuri.SoSoSoap;
-import org.tempuri.TeeHenkilonTunnusKyselyResponse;
+import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo;
 
 /**
  * User: tommiha
@@ -18,7 +22,8 @@ public class VtjServiceImpl implements VtjService {
     private SoSoSoap soSoSoap;
     private String kayttajatunnus;
     private String salasana;
-
+    private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
+    
     @Cacheable(value = "vtj", key = "#hetu")
     public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu) {
         VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu);
@@ -35,18 +40,60 @@ public class VtjServiceImpl implements VtjService {
     }
 
     private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus) {
+        // FIXME!! TÄMÄ ON VAIN DEBUGGAUSTA VARTEN!!!
+        logger.error("\nVTJ vastaus:\n" + vastaus);
+        
         YksiloityHenkilo henkilo = new YksiloityHenkilo();
-        henkilo.setEtunimi(vastaus.getHenkilo().getNykyisetEtunimet().getEtunimet());
-        henkilo.setSukunimi(vastaus.getHenkilo().getNykyinenSukunimi().getSukunimi());
-        String kutsumanimi = vastaus.getHenkilo().getNykyinenKutsumanimi().getKutsumanimi();
+        Henkilo vtjHenkilo = vastaus.getHenkilo();
+        
+        henkilo.setEtunimi(vtjHenkilo.getNykyisetEtunimet().getEtunimet());
+        henkilo.setSukunimi(vtjHenkilo.getNykyinenSukunimi().getSukunimi());
+        String kutsumanimi = vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi();
         henkilo.setKutsumanimi(kutsumanimi.equals("") ? henkilo.getEtunimi() : kutsumanimi);
 
-        String turvakieltoTieto = vastaus.getHenkilo().getTurvakielto().getTurvakieltoTieto();
+        String turvakieltoTieto = vtjHenkilo.getTurvakielto().getTurvakieltoTieto();
         henkilo.setTurvakielto(turvakieltoTieto.equals("1") ? true : false);
-        henkilo.setHetu(vastaus.getHenkilo().getHenkilotunnus().getValue());
+        henkilo.setHetu(vtjHenkilo.getHenkilotunnus().getValue());
 
-        String sukupuolikoodi = vastaus.getHenkilo().getSukupuoli().getSukupuolikoodi();
+        String sukupuolikoodi = vtjHenkilo.getSukupuoli().getSukupuolikoodi();
         henkilo.setSukupuoli(sukupuolikoodi.equals("2") ? YksiloityHenkilo.Sukupuoli.NAINEN : YksiloityHenkilo.Sukupuoli.MIES);
+        
+        YksiloityHenkilo.Aidinkieli aidinkieli = henkilo.new Aidinkieli(vtjHenkilo.getAidinkieli().getKielikoodi(), 
+                vtjHenkilo.getAidinkieli().getKieliSelvakielinen());
+        henkilo.setAidinkieli(aidinkieli);
+        
+        if (vtjHenkilo.getSahkopostiosoite() != null) {
+            henkilo.setSahkoposti(vtjHenkilo.getSahkopostiosoite());
+        }
+        
+        if (vtjHenkilo.getKansalaisuus() != null) {
+            for (fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo.Kansalaisuus vtjKansalaisuus : vtjHenkilo.getKansalaisuus()) {
+                YksiloityHenkilo.Kansalaisuus kansalaisuus = henkilo.new Kansalaisuus(vtjKansalaisuus.getKansalaisuusSelvakielinen());
+                henkilo.addKansalaisuus(kansalaisuus);
+            }
+        }
+        
+        if (vtjHenkilo.getVakinainenKotimainenOsoite() != null) {
+            YksiloityHenkilo.OsoiteTieto kotimaanOsoite = henkilo.new OsoiteTieto(
+                    "VTJ ,vakinainen kotimaan osoite",
+                    vtjHenkilo.getVakinainenKotimainenOsoite().getParasOsoiteTieto(),
+                    vtjHenkilo.getVakinainenKotimainenOsoite().getPostinumero(),
+                    vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaS(),
+                    "Suomi");
+            henkilo.addOsoiteTieto(kotimaanOsoite);
+        }
+        
+        if (vtjHenkilo.getVakinainenUlkomainenOsoite() != null) {
+            YksiloityHenkilo.OsoiteTieto ulkomaanOsoite = henkilo.new OsoiteTieto(
+                    "VTJ, vakinainen ulkomaan osoite",
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenLahiosoite(),
+                    null,
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenPaikkakunta(),
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getValtioS());
+            henkilo.addOsoiteTieto(ulkomaanOsoite);
+        }
+        
+        
         return henkilo;
     }
 

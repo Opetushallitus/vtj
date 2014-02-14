@@ -1,6 +1,8 @@
 package fi.vm.sade.rajapinnat.vtj.api;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: tommiha
@@ -24,6 +26,14 @@ public class YksiloityHenkilo implements Serializable {
     private Sukupuoli sukupuoli;
 
     private boolean turvakielto;
+
+    private String sahkoposti;
+
+    private Aidinkieli aidinkieli;
+
+    private List<Kansalaisuus> kansalaisuus;
+
+    private List<OsoiteTieto> osoitteet;
 
     public String getHetu() {
         return hetu;
@@ -71,5 +81,121 @@ public class YksiloityHenkilo implements Serializable {
 
     public void setKutsumanimi(String kutsumanimi) {
         this.kutsumanimi = kutsumanimi;
+    }
+
+    public Aidinkieli getAidinkieli() {
+        return aidinkieli;
+    }
+
+    public void setAidinkieli(Aidinkieli aidinkieli) {
+        this.aidinkieli = aidinkieli;
+    }
+
+    public void addKansalaisuus(YksiloityHenkilo.Kansalaisuus kansalaisuus) {
+        if (this.kansalaisuus == null) {
+            this.kansalaisuus = new ArrayList<YksiloityHenkilo.Kansalaisuus>();
+        }
+        this.kansalaisuus.add(kansalaisuus);
+    }
+
+    public List<Kansalaisuus> getKansalaisuus() {
+        return kansalaisuus;
+    }
+
+    public List<OsoiteTieto> getOsoitteet() {
+        return osoitteet;
+    }
+
+    public void addOsoiteTieto(OsoiteTieto osoite) {
+        if (this.osoitteet == null) {
+            this.osoitteet = new ArrayList<YksiloityHenkilo.OsoiteTieto>();
+        }
+        this.osoitteet.add(osoite);
+    }
+
+    public String getSahkoposti() {
+        return sahkoposti;
+    }
+
+    public void setSahkoposti(String sahkoposti) {
+        this.sahkoposti = sahkoposti;
+    }
+
+
+
+
+
+    public class Aidinkieli {
+
+        private String kielikoodi;
+
+        private String kieli;
+
+        public Aidinkieli(String kielikoodi, String kieli) {
+            this.kielikoodi = kielikoodi;
+            this.kieli = kieli;
+        }
+
+        public String getKielikoodi() {
+            return kielikoodi;
+        }
+
+        public String getKieli() {
+            return kieli;
+        }
+    }
+    
+    public class Kansalaisuus {
+
+        private String kansalaisuus;
+
+        public Kansalaisuus(String kansalaisuus) {
+            this.kansalaisuus = kansalaisuus;
+        }
+
+        public String getKansalaisuus() {
+            return kansalaisuus;
+        }
+    }
+    
+    public class OsoiteTieto {
+
+        private String tyyppi;
+
+        private String katuosoite;
+
+        private String kaupunki;
+
+        private String postinumero;
+
+        private String maa;
+
+        public OsoiteTieto(String tyyppi, String katuosoite, String postinumero, String kaupunki, String maa) {
+            this.tyyppi = tyyppi;
+            this.katuosoite = katuosoite;
+            this.postinumero = postinumero;
+            this.kaupunki = kaupunki;
+            this.maa = maa;
+        }
+
+        public String getTyyppi() {
+            return tyyppi;
+        }
+
+        public String getKatuosoite() {
+            return katuosoite;
+        }
+
+        public String getKaupunki() {
+            return kaupunki;
+        }
+
+        public String getPostinumero() {
+            return postinumero;
+        }
+
+        public String getMaa() {
+            return maa;
+        }
     }
 }
