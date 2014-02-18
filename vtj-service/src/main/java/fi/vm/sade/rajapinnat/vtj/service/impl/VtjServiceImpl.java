@@ -11,6 +11,7 @@ import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo;
+import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo.Kansalaisuus;
 
 /**
  * User: tommiha
@@ -58,18 +59,15 @@ public class VtjServiceImpl implements VtjService {
         String sukupuolikoodi = vtjHenkilo.getSukupuoli().getSukupuolikoodi();
         henkilo.setSukupuoli(sukupuolikoodi.equals("2") ? YksiloityHenkilo.Sukupuoli.NAINEN : YksiloityHenkilo.Sukupuoli.MIES);
         
-        YksiloityHenkilo.Aidinkieli aidinkieli = henkilo.new Aidinkieli(vtjHenkilo.getAidinkieli().getKielikoodi(), 
-                vtjHenkilo.getAidinkieli().getKieliSelvakielinen());
-        henkilo.setAidinkieli(aidinkieli);
+        henkilo.setAidinkieliKoodi(vtjHenkilo.getAidinkieli().getKielikoodi());
         
         if (vtjHenkilo.getSahkopostiosoite() != null) {
             henkilo.setSahkoposti(vtjHenkilo.getSahkopostiosoite());
         }
         
         if (vtjHenkilo.getKansalaisuus() != null) {
-            for (fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo.Kansalaisuus vtjKansalaisuus : vtjHenkilo.getKansalaisuus()) {
-                YksiloityHenkilo.Kansalaisuus kansalaisuus = henkilo.new Kansalaisuus(vtjKansalaisuus.getKansalaisuusSelvakielinen());
-                henkilo.addKansalaisuus(kansalaisuus);
+            for (Kansalaisuus vtjKansalaisuus : vtjHenkilo.getKansalaisuus()) {
+                henkilo.addKansalaisuusKoodi(vtjKansalaisuus.getKansalaisuuskoodi3());
             }
         }
         
@@ -93,7 +91,7 @@ public class VtjServiceImpl implements VtjService {
             }
             
             YksiloityHenkilo.OsoiteTieto kotimaanOsoite = henkilo.new OsoiteTieto(
-                    "VTJ, vakinainen kotimaan osoite",
+                    "VTJ:n kotimaan osoite",
                     postiOsoite.toString(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostinumero(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaS(),
@@ -103,7 +101,7 @@ public class VtjServiceImpl implements VtjService {
         
         if (vtjHenkilo.getVakinainenUlkomainenOsoite() != null) {
             YksiloityHenkilo.OsoiteTieto ulkomaanOsoite = henkilo.new OsoiteTieto(
-                    "VTJ, vakinainen ulkomaan osoite",
+                    "VTJ:n ulkomaan osoite",
                     vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenLahiosoite(),
                     null,
                     vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenPaikkakunta(),

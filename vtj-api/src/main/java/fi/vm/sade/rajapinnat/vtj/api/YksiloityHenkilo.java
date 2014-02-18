@@ -29,9 +29,9 @@ public class YksiloityHenkilo implements Serializable {
 
     private String sahkoposti;
 
-    private Aidinkieli aidinkieli;
+    private String aidinkieliKoodi;
 
-    private List<Kansalaisuus> kansalaisuus;
+    private List<String> kansalaisuusKoodit;
 
     private List<OsoiteTieto> osoitteet;
 
@@ -83,23 +83,23 @@ public class YksiloityHenkilo implements Serializable {
         this.kutsumanimi = kutsumanimi;
     }
 
-    public Aidinkieli getAidinkieli() {
-        return aidinkieli;
+    public String getAidinkieliKoodi() {
+        return aidinkieliKoodi;
     }
 
-    public void setAidinkieli(Aidinkieli aidinkieli) {
-        this.aidinkieli = aidinkieli;
+    public void setAidinkieliKoodi(String aidinkieliKoodi) {
+        this.aidinkieliKoodi = aidinkieliKoodi;
     }
 
-    public void addKansalaisuus(YksiloityHenkilo.Kansalaisuus kansalaisuus) {
-        if (this.kansalaisuus == null) {
-            this.kansalaisuus = new ArrayList<YksiloityHenkilo.Kansalaisuus>();
+    public void addKansalaisuusKoodi(String kansalaisuusKoodi) {
+        if (this.kansalaisuusKoodit == null) {
+            this.kansalaisuusKoodit = new ArrayList<String>();
         }
-        this.kansalaisuus.add(kansalaisuus);
+        this.kansalaisuusKoodit.add(kansalaisuusKoodi);
     }
 
-    public List<Kansalaisuus> getKansalaisuus() {
-        return kansalaisuus;
+    public List<String> getKansalaisuusKoodit() {
+        return kansalaisuusKoodit;
     }
 
     public List<OsoiteTieto> getOsoitteet() {
@@ -124,40 +124,6 @@ public class YksiloityHenkilo implements Serializable {
 
 
 
-
-    public class Aidinkieli {
-
-        private String kielikoodi;
-
-        private String kieli;
-
-        public Aidinkieli(String kielikoodi, String kieli) {
-            this.kielikoodi = kielikoodi;
-            this.kieli = kieli;
-        }
-
-        public String getKielikoodi() {
-            return kielikoodi;
-        }
-
-        public String getKieli() {
-            return kieli;
-        }
-    }
-    
-    public class Kansalaisuus {
-
-        private String kansalaisuus;
-
-        public Kansalaisuus(String kansalaisuus) {
-            this.kansalaisuus = kansalaisuus;
-        }
-
-        public String getKansalaisuus() {
-            return kansalaisuus;
-        }
-    }
-    
     public class OsoiteTieto {
 
         private String tyyppi;
@@ -170,7 +136,8 @@ public class YksiloityHenkilo implements Serializable {
 
         private String maa;
 
-        public OsoiteTieto(String tyyppi, String katuosoite, String postinumero, String kaupunki, String maa) {
+        public OsoiteTieto(String tyyppi, String katuosoite,
+                String postinumero, String kaupunki, String maa) {
             this.tyyppi = tyyppi;
             this.katuosoite = katuosoite;
             this.postinumero = postinumero;
