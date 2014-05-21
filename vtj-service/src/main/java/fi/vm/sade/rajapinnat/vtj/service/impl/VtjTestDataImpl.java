@@ -84,7 +84,14 @@ public class VtjTestDataImpl implements VtjTestData{
     public YksiloityHenkilo teeHakuTestidatasta(String hetu) {
         for (YksiloityHenkilo yh : testData) {
             if (yh.getHetu().equalsIgnoreCase(hetu)) {
-                return yh;
+                YksiloityHenkilo result = new YksiloityHenkilo();
+                result.setHetu(yh.getHetu());
+                result.setEtunimi(yh.getEtunimi());
+                result.setKutsumanimi(yh.getKutsumanimi());
+                result.setSukunimi(yh.getSukunimi());
+                result.setSukupuoli(yh.getSukupuoli());
+                
+                return result;
             }
         }
         // Vastauksena pitää aina löytyä henkilö tai palauttaa virhe!!
