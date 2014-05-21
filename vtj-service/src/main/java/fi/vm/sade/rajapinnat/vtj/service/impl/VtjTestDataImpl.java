@@ -87,8 +87,8 @@ public class VtjTestDataImpl implements VtjTestData{
                 YksiloityHenkilo result = new YksiloityHenkilo();
                 result.setHetu(yh.getHetu());
                 result.setEtunimi(yh.getEtunimi());
-                result.setKutsumanimi(yh.getKutsumanimi());
                 result.setSukunimi(yh.getSukunimi());
+                result.setKutsumanimi(yh.getKutsumanimi());
                 result.setSukupuoli(yh.getSukupuoli());
                 
                 return result;
