@@ -11,15 +11,17 @@ import java.util.List;
  */
 public class YksiloityHenkilo implements Serializable {
 
+    private static final long serialVersionUID = 8789597334053850029L;
+
     public static enum Sukupuoli {
         MIES, NAINEN
     }
 
     private String etunimi;
 
-    private String sukunimi;
-
     private String kutsumanimi;
+
+    private String sukunimi;
 
     private String hetu;
 
