@@ -20,8 +20,10 @@
     <bean id="vtjService" class="fi.vm.sade.rajapinnat.vtj.service.impl.VtjServiceImpl">
         <property name="kayttajatunnus" value="${vtj.username}" />
         <property name="salasana" value="${vtj.password}" />
-        <property name="production" value="${vtj.production.env}" />
         <property name="soSoSoap" ref="soSoSoap" />
+    </bean>
+    
+    <bean id="vtjTestData" class="fi.vm.sade.rajapinnat.vtj.service.impl.VtjTestDataImpl">
     </bean>
 
 </beans>

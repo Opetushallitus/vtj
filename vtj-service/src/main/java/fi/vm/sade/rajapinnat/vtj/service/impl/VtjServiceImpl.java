@@ -23,18 +23,12 @@ public class VtjServiceImpl implements VtjService {
     private SoSoSoap soSoSoap;
     private String kayttajatunnus;
     private String salasana;
-    private boolean production;
     private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
     
     @Cacheable(value = "vtj", key = "#hetu")
     public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu) {
-        if (production) {
-            VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu);
-            return convert(vastaus);
-        }
-        else {
-            return null;
-        }
+        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu);
+        return convert(vastaus);
     }
 
     private VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu) {
@@ -139,13 +133,5 @@ public class VtjServiceImpl implements VtjService {
 
     public void setSalasana(String salasana) {
         this.salasana = salasana;
-    }
-
-    public boolean isProduction() {
-        return production;
-    }
-
-    public void setProduction(boolean production) {
-        this.production = production;
     }
 }
