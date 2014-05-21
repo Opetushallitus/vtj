@@ -100,8 +100,8 @@ public class VtjTestDataImpl implements VtjTestData{
     
     private static YksiloityHenkilo createNewYH(String hetu,
                                           String etunimi,
-                                          String sukunimi,
                                           String kutsumanimi,
+                                          String sukunimi,
                                           Sukupuoli sukupuoli) {
         YksiloityHenkilo yh = new YksiloityHenkilo();
         yh.setHetu(hetu);
