@@ -79,6 +79,11 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("090271-998X", "Meiju Maiju",                 "Maiju",     "Haapakoski",      Sukupuoli.NAINEN));
         testData.add(createNewYH("010449-998P", "Sonja Agneta/Aune Kukka",     null,       "von Braun de Karttunen", Sukupuoli.NAINEN));
         testData.add(createNewYH("010522-998J", "Elina Kukka-Maaria",          null,       "Rossi",             Sukupuoli.NAINEN));
+        //Vetuma
+        testData.add(createNewYH("010101-123N", "Teemu",                       "Teemu",    "Testaaja",          Sukupuoli.MIES));
+        testData.add(createNewYH("210281-9988", "NORDEA",                      "NORDEA",   "DEMO",              Sukupuoli.NAINEN));
+        testData.add(createNewYH("081181-9984", "ANNA",                        "ANNA",     "TESTI",             Sukupuoli.NAINEN));
+        testData.add(createNewYH("010170-960F", "Maija",                       "Maija",    "Meikäläinen",       Sukupuoli.NAINEN));
     }
     
     public YksiloityHenkilo teeHakuTestidatasta(String hetu) {
