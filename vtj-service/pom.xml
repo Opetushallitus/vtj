@@ -7,7 +7,7 @@
     <parent>
         <groupId>fi.vm.sade.rajapinnat</groupId>
         <artifactId>vtj</artifactId>
-        <version>7.0-SNAPSHOT</version>
+        <version>9.0-SNAPSHOT</version>
     </parent>
 
     <groupId>fi.vm.sade.rajapinnat</groupId>
@@ -17,6 +17,8 @@
     <properties>
         <deploy.to.server>tomcat</deploy.to.server>
         <webapp.port>8081</webapp.port>
+        <slf4j.version>1.6.1</slf4j.version>
+        <log4j.version>1.2.14</log4j.version>
     </properties>
 
     <build>
@@ -24,7 +26,7 @@
     </build>
 
     <dependencies>
-    <dependency>
+	    <dependency>
                 <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache-core</artifactId>
                 <version>2.5.0</version>
@@ -56,6 +58,24 @@
                   </exclusion>
             </exclusions>
          </dependency>
+
+<!-- Logging dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+<!-- End logging dependecies -->
         <dependency>
             <groupId>fi.vm.sade.rajapinnat</groupId>
             <artifactId>vtj-api</artifactId>
@@ -70,12 +90,12 @@
         <dependency>
             <groupId>fi.vm.sade.generic</groupId>
             <artifactId>generic-common</artifactId>
-            <version>7.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>fi.vm.sade.generic</groupId>
             <artifactId>dependencies-service</artifactId>
-            <version>7.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <type>pom</type>
         </dependency>
 
@@ -135,6 +155,10 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
                     <artifactId>spring</artifactId>
                 </exclusion>
                 <exclusion>
@@ -166,65 +190,53 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- spring security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
+    	    <version>${spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-cas</artifactId>
+            <version>${spring.security.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+    
 
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-api</artifactId>
-            <version>2.7.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-core</artifactId>
-            <version>2.7.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>2.7.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>2.7.3</version>
-        </dependency>
 
         <!-- LOG -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
+	    <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.3.1</version>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
     

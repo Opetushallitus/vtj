@@ -1,12 +1,17 @@
 package fi.vm.sade.rajapinnat.vtj.service.impl;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.tempuri.SoSoSoap;
+import org.tempuri.TeeHenkilonTunnusKyselyResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma;
-import org.springframework.cache.annotation.Cacheable;
-import org.tempuri.SoSoSoap;
-import org.tempuri.TeeHenkilonTunnusKyselyResponse;
+import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo;
+import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo.Kansalaisuus;
 
 /**
  * User: tommiha
@@ -18,7 +23,8 @@ public class VtjServiceImpl implements VtjService {
     private SoSoSoap soSoSoap;
     private String kayttajatunnus;
     private String salasana;
-
+    private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
+    
     @Cacheable(value = "vtj", key = "#hetu")
     public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu) {
         VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu);
@@ -35,18 +41,73 @@ public class VtjServiceImpl implements VtjService {
     }
 
     private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus) {
+        // FIXME!! TÄMÄ ON VAIN DEBUGGAUSTA VARTEN!!!
+        logger.error("\nVTJ vastaus:\n" + vastaus);
+        
         YksiloityHenkilo henkilo = new YksiloityHenkilo();
-        henkilo.setEtunimi(vastaus.getHenkilo().getNykyisetEtunimet().getEtunimet());
-        henkilo.setSukunimi(vastaus.getHenkilo().getNykyinenSukunimi().getSukunimi());
-        String kutsumanimi = vastaus.getHenkilo().getNykyinenKutsumanimi().getKutsumanimi();
-        henkilo.setKutsumanimi(kutsumanimi.equals("") ? henkilo.getEtunimi() : kutsumanimi);
+        Henkilo vtjHenkilo = vastaus.getHenkilo();
+        
+        henkilo.setEtunimi(vtjHenkilo.getNykyisetEtunimet().getEtunimet());
+        henkilo.setSukunimi(vtjHenkilo.getNykyinenSukunimi().getSukunimi());
+        henkilo.setKutsumanimi(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi());
 
-        String turvakieltoTieto = vastaus.getHenkilo().getTurvakielto().getTurvakieltoTieto();
+        String turvakieltoTieto = vtjHenkilo.getTurvakielto().getTurvakieltoTieto();
         henkilo.setTurvakielto(turvakieltoTieto.equals("1") ? true : false);
-        henkilo.setHetu(vastaus.getHenkilo().getHenkilotunnus().getValue());
+        henkilo.setHetu(vtjHenkilo.getHenkilotunnus().getValue());
 
-        String sukupuolikoodi = vastaus.getHenkilo().getSukupuoli().getSukupuolikoodi();
+        String sukupuolikoodi = vtjHenkilo.getSukupuoli().getSukupuolikoodi();
         henkilo.setSukupuoli(sukupuolikoodi.equals("2") ? YksiloityHenkilo.Sukupuoli.NAINEN : YksiloityHenkilo.Sukupuoli.MIES);
+        
+        henkilo.setAidinkieliKoodi(vtjHenkilo.getAidinkieli().getKielikoodi());
+        
+        if (vtjHenkilo.getSahkopostiosoite() != null) {
+            henkilo.setSahkoposti(vtjHenkilo.getSahkopostiosoite());
+        }
+        
+        if (vtjHenkilo.getKansalaisuus() != null) {
+            for (Kansalaisuus vtjKansalaisuus : vtjHenkilo.getKansalaisuus()) {
+                henkilo.addKansalaisuusKoodi(vtjKansalaisuus.getKansalaisuuskoodi3());
+            }
+        }
+        
+        if (vtjHenkilo.getVakinainenKotimainenOsoite() != null) {
+            StringBuffer postiOsoite = new StringBuffer();
+            
+            postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS());
+            postiOsoite.append(" ");
+            postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatunumero());
+            if (vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain() != null) {
+                postiOsoite.append(" ");
+                postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain());
+            }
+            if (vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero() != null) {
+                postiOsoite.append(" ");
+                postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero());
+            }
+            if (vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain() != null) {
+                postiOsoite.append(" ");
+                postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain());
+            }
+            
+            YksiloityHenkilo.OsoiteTieto kotimaanOsoite = henkilo.new OsoiteTieto(
+                    "VTJ:n kotimaan osoite",
+                    postiOsoite.toString(),
+                    vtjHenkilo.getVakinainenKotimainenOsoite().getPostinumero(),
+                    vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaS(),
+                    "Suomi");
+            henkilo.addOsoiteTieto(kotimaanOsoite);
+        }
+        
+        if (vtjHenkilo.getVakinainenUlkomainenOsoite() != null) {
+            YksiloityHenkilo.OsoiteTieto ulkomaanOsoite = henkilo.new OsoiteTieto(
+                    "VTJ:n ulkomaan osoite",
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenLahiosoite(),
+                    null,
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenPaikkakunta(),
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getValtioS());
+            henkilo.addOsoiteTieto(ulkomaanOsoite);
+        }
+        
         return henkilo;
     }
 
@@ -73,5 +134,4 @@ public class VtjServiceImpl implements VtjService {
     public void setSalasana(String salasana) {
         this.salasana = salasana;
     }
-
 }
