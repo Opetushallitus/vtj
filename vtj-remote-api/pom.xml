@@ -20,11 +20,13 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-api</artifactId>
             <scope>provided</scope>
+            <version>${cxf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.version}</version>
         </dependency>
 
         <dependency>
