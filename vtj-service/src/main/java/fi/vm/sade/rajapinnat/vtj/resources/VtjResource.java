@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -43,12 +44,13 @@ public class VtjResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{hetu}")
-    public Response teeHenkiloKysely(@PathParam("hetu") String hetu) {
+    public Response teeHenkiloKysely(@PathParam("hetu") String hetu,
+                                     @QueryParam("log") Boolean logMessage) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             YksiloityHenkilo yksiloityHenkilo = null;
             if (productionEnv) {
-                yksiloityHenkilo = vtjService.teeHenkiloKysely(authentication.getName(), hetu);
+                yksiloityHenkilo = vtjService.teeHenkiloKysely(authentication.getName(), hetu, (logMessage != null ? logMessage : false));
             }
             else {
                 yksiloityHenkilo = vtjTestData.teeHakuTestidatasta(hetu);

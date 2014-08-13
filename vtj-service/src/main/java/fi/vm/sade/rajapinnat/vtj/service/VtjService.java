@@ -18,5 +18,5 @@ public interface VtjService {
      * @return
      * @throws fi.vm.sade.rajapinnat.vtj.NotFoundException jos henkilöä ei löydy.
      */
-    YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu);
+    YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu, boolean logMessage);
 }

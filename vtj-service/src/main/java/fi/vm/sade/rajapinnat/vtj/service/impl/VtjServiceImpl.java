@@ -26,9 +26,9 @@ public class VtjServiceImpl implements VtjService {
     private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
     
     @Cacheable(value = "vtj", key = "#hetu")
-    public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu) {
+    public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu, boolean logMessage) {
         VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu);
-        return convert(vastaus);
+        return convert(vastaus, logMessage);
     }
 
     private VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu) {
@@ -40,9 +40,11 @@ public class VtjServiceImpl implements VtjService {
         return vastaus;
     }
 
-    private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus) {
-        // FIXME!! TÄMÄ ON VAIN DEBUGGAUSTA VARTEN!!!
-        logger.error("\nVTJ vastaus:\n" + vastaus);
+    private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus, boolean logMessage) {
+        
+        if (logMessage) {
+            logger.error("\nDEBUG LOG - VTJHenkiloVastaussanoma:\n" + vastaus.toString());
+        }
         
         YksiloityHenkilo henkilo = new YksiloityHenkilo();
         Henkilo vtjHenkilo = vastaus.getHenkilo();
