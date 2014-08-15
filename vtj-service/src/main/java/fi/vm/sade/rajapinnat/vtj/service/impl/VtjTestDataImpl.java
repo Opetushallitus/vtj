@@ -79,6 +79,7 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("090271-998X", "Meiju Maiju",                 "Maiju",     "Haapakoski",      Sukupuoli.NAINEN));
         testData.add(createNewYH("010449-998P", "Sonja Agneta/Aune Kukka",     null,       "von Braun de Karttunen", Sukupuoli.NAINEN));
         testData.add(createNewYH("010522-998J", "Elina Kukka-Maaria",          null,       "Rossi",             Sukupuoli.NAINEN));
+        testData.add(createNewYH("150894-9877", "Teppo",                       "Teppo",    "Testaaja",          Sukupuoli.MIES));
         //Vetuma
         testData.add(createNewYH("010101-123N", "Teemu",                       "Teemu",    "Testaaja",          Sukupuoli.MIES));
         testData.add(createNewYH("210281-9988", "NORDEA",                      "NORDEA",   "DEMO",              Sukupuoli.NAINEN));
