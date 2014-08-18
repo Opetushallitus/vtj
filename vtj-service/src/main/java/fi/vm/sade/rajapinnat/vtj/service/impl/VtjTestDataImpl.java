@@ -88,9 +88,12 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("081181-9984", "ANNA",                        "ANNA",     "TESTI",             Sukupuoli.NAINEN, null, null, null, null, null));
         testData.add(createNewYH("010170-960F", "Maija",                       "Maija",    "Meikäläinen",       Sukupuoli.NAINEN, null, null, null, null, null));
         //VTJ-update-tests
-        testData.add(createNewYH("020260-909P", "Matti",                       "Matti",    "Meikäläinen",       Sukupuoli.MIES, null, null, null, null, null));
-        testData.add(createNewYH("020260-9833", "Ville",                       null,       "Meikäläinen",       Sukupuoli.MIES, "ville.meikalainen@fromvtj.oph", "Uusikatu 1", "12345", "Auramaa", "Suomi"));
-        testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Seppo",    "Meikäläinen",       Sukupuoli.MIES, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 1", "54321", "Kymimaa", "Suomi"));
+        //testData.add(createNewYH("020260-909P", "Matti",                       "Matti",    "Meikäläinen",       Sukupuoli.MIES, null, null, null, null, null));
+        testData.add(createNewYH("020260-909P", "Matti",                       "Matti",    "Testinen",          Sukupuoli.MIES, "matti.meikalainen@fromvtj.oph", "Keskikatu 100", "98765", "Pohjanmaa", "Suomi"));
+        //testData.add(createNewYH("020260-9833", "Ville",                       null,       "Meikäläinen",       Sukupuoli.MIES, "ville.meikalainen@fromvtj.oph", "Uusikatu 1", "12345", "Auramaa", "Suomi"));
+        testData.add(createNewYH("020260-9833", "Ville",                       null,       "Meikäläinen",       Sukupuoli.MIES, "ville.meikalainen@fromvtj.oph", "Uusikatu 100", "12345", "Auramaa", "Suomi"));
+        //testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Seppo",    "Meikäläinen",       Sukupuoli.MIES, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 1", "54321", "Kymimaa", "Suomi"));
+        testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Teppo",    "Meikäläinen",       Sukupuoli.MIES, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 100", "54321", "Kymimaa", "Suomi"));
     }
     
     public YksiloityHenkilo teeHakuTestidatasta(String hetu) {
