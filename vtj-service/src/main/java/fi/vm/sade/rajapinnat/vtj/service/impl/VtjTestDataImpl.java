@@ -91,16 +91,9 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("081181-9984", "ANNA",                        "ANNA",     "TESTI",             Sukupuoli.NAINEN, false, null, null, null, null, null));
         testData.add(createNewYH("010170-960F", "Maija",                       "Maija",    "Meikäläinen",       Sukupuoli.NAINEN, false, null, null, null, null, null));
         //VTJ-update-tests static
-        //testData.add(createNewYH("020260-909P", "Matti",                       "Matti",    "Meikäläinen",       Sukupuoli.MIES, false, null, null, null, null, null));
         testData.add(createNewYH("020260-909P", "Matti",                       "Matti",    "Testinen",          Sukupuoli.MIES, false, "matti.meikalainen@fromvtj.oph", "Keskikatu 100", "98765", "Pohjanmaa", "Suomi"));
-        //testData.add(createNewYH("020260-9833", "Ville",                       null,       "Meikäläinen",       Sukupuoli.MIES, false, "ville.meikalainen@fromvtj.oph", "Uusikatu 1", "12345", "Auramaa", "Suomi"));
         testData.add(createNewYH("020260-9833", "Ville",                       null,       "Meikäläinen",       Sukupuoli.MIES, false, "ville.meikalainen@fromvtj.oph", "Uusikatu 100", "12345", "Auramaa", "Suomi"));
-        //testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Seppo",    "Meikäläinen",       Sukupuoli.MIES, false, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 1", "54321", "Kymimaa", "Suomi"));
         testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Teppo",    "Meikäläinen",       Sukupuoli.MIES, false, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 100", "54321", "Kymimaa", "Suomi"));
-        //VTJ-update-tests changing data hetus
-        // 010150-969L
-        // 010150-913T
-        // 010150-979X
     }
 
     private static String[] changingDataHetus = {"010150-969L", "010150-913T", "010150-979X"};
