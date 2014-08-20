@@ -155,6 +155,7 @@ public class VtjTestDataImpl implements VtjTestData{
             //Names applied in a sequence to make things more predictable
             yh.setEtunimi(etunimet[counter % 2]);
             yh.setSukunimi(sukunimet[counter % 2]);
+            counter++;
             yh.setKutsumanimi(yh.getEtunimi().split(" ")[randInt(0,1)]);
             yh.addOsoiteTieto(yh.new OsoiteTieto("VTJosoite", katuosoitteet[randInt(0,2)], new Integer(randInt(10000, 20000)).toString(), kaupungit[randInt(0,2)], maa));
             yh.setSahkoposti((yh.getKutsumanimi() + "@fromvtj.oph").toLowerCase());
