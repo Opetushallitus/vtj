@@ -12,6 +12,7 @@ import fi.vm.sade.rajapinnat.vtj.service.VtjTestData;
 public class VtjTestDataImpl implements VtjTestData{
 
     private static Random rand = new Random();
+    private static int counter = 0;
     private static final List<YksiloityHenkilo> testData = new ArrayList<YksiloityHenkilo>();
     static {
         //hetu, etunimet, kutsumanimi, sukunimi, random, sähköposti, tyyppi, katuosoite, postinumero, kaupunki, maa
@@ -96,13 +97,17 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("020260-9833", "Ville",                       null,       "Meikäläinen",       Sukupuoli.MIES, false, "ville.meikalainen@fromvtj.oph", "Uusikatu 100", "12345", "Auramaa", "Suomi"));
         //testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Seppo",    "Meikäläinen",       Sukupuoli.MIES, false, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 1", "54321", "Kymimaa", "Suomi"));
         testData.add(createNewYH("020260-941R", "Teppo Seppo",                 "Teppo",    "Meikäläinen",       Sukupuoli.MIES, false, "seppo.meikalainen@fromvtj.oph", "Vanhakatu 100", "54321", "Kymimaa", "Suomi"));
-        //VTJ-update-tests random data hetus
+        //VTJ-update-tests changing data hetus
         // 010150-969L
         // 010150-913T
         // 010150-979X
     }
 
-    private static String[] randomDataHetus = {"010150-969L", "010150-913T", "010150-979X"};
+    private static String[] changingDataHetus = {"010150-969L", "010150-913T", "010150-979X"};
+    private static String[] etunimet = {"Olavi Uolevi", "Eetu Aatu"};
+    private static String[] sukunimet = {"Hakkarainen", "Tikkanen"};
+    private static String[] katuosoitteet = {"Vanhakatu 1", "Keskikatu 2", "Uusikatu 3"};
+    private static String[] kaupungit = {"Hesa", "Manse", "Suomen Chicago"};
     
     public YksiloityHenkilo teeHakuTestidatasta(String hetu) {
         for (YksiloityHenkilo yh : testData) {
@@ -122,8 +127,8 @@ public class VtjTestDataImpl implements VtjTestData{
                 return result;
             }
         }
-        for(String randomDatahetu : randomDataHetus) {
-            if (hetu.matches(randomDatahetu)) {
+        for(String changingDatahetu : changingDataHetus) {
+            if (hetu.matches(changingDatahetu)) {
                 return createNewYH(hetu, null, null, null, Sukupuoli.MIES, true, null, null, null, null, "Suomi");
             }
         }
@@ -146,14 +151,10 @@ public class VtjTestDataImpl implements VtjTestData{
                                           ) {
         YksiloityHenkilo yh = new YksiloityHenkilo();
 
-        String[] etunimet = {"Olavi Uolevi", "Eetu Aatu", "Sakari Jalmari"};
-        String[] sukunimet = {"Hakkarainen", "Tikkanen", "Mäkinen"};
-        String[] katuosoitteet = {"Vanhakatu 1", "Keskikatu 2", "Uusikatu 3"};
-        String[] kaupungit = {"Hesa", "Manse", "Suomen Chicago"};
-
         if (random) {
-            yh.setEtunimi(etunimet[randInt(0,2)]);
-            yh.setSukunimi(sukunimet[randInt(0,2)]);
+            //Names applied in a sequence to make things more predictable
+            yh.setEtunimi(etunimet[counter % 2]);
+            yh.setSukunimi(sukunimet[counter % 2]);
             yh.setKutsumanimi(yh.getEtunimi().split(" ")[randInt(0,1)]);
             yh.addOsoiteTieto(yh.new OsoiteTieto("VTJosoite", katuosoitteet[randInt(0,2)], new Integer(randInt(10000, 20000)).toString(), kaupungit[randInt(0,2)], maa));
             yh.setSahkoposti((yh.getKutsumanimi() + "@fromvtj.oph").toLowerCase());
