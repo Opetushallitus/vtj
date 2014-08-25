@@ -158,7 +158,7 @@ public class VtjTestDataImpl implements VtjTestData{
             yh.setSukunimi(sukunimi);
             yh.setKutsumanimi(kutsumanimi);
             if (katuosoite != null || postinumero != null || kaupunki != null || maa != null) {
-                yh.addOsoiteTieto(yh.new OsoiteTieto("yhteystietotyyppi8", katuosoite, postinumero, kaupunki, maa));
+                yh.addOsoiteTieto(yh.new OsoiteTieto("yhteystietotyyppi4", katuosoite, postinumero, kaupunki, maa));
             }
             yh.setSahkoposti(sahkoposti);
         }
