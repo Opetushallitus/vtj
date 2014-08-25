@@ -150,7 +150,7 @@ public class VtjTestDataImpl implements VtjTestData{
             yh.setSukunimi(sukunimet[counter % 2]);
             counter++;
             yh.setKutsumanimi(yh.getEtunimi().split(" ")[randInt(0,1)]);
-            yh.addOsoiteTieto(yh.new OsoiteTieto("VTJosoite", katuosoitteet[randInt(0,2)], new Integer(randInt(10000, 20000)).toString(), kaupungit[randInt(0,2)], maa));
+            yh.addOsoiteTieto(yh.new OsoiteTieto("yhteystietotyyppi4", katuosoitteet[randInt(0,2)], new Integer(randInt(10000, 20000)).toString(), kaupungit[randInt(0,2)], maa));
             yh.setSahkoposti((yh.getKutsumanimi() + "@fromvtj.oph").toLowerCase());
         }
         else {
@@ -158,7 +158,7 @@ public class VtjTestDataImpl implements VtjTestData{
             yh.setSukunimi(sukunimi);
             yh.setKutsumanimi(kutsumanimi);
             if (katuosoite != null || postinumero != null || kaupunki != null || maa != null) {
-                yh.addOsoiteTieto(yh.new OsoiteTieto("VTJosoite", katuosoite, postinumero, kaupunki, maa));
+                yh.addOsoiteTieto(yh.new OsoiteTieto("yhteystietotyyppi8", katuosoite, postinumero, kaupunki, maa));
             }
             yh.setSahkoposti(sahkoposti);
         }
