@@ -73,40 +73,67 @@ public class VtjServiceImpl implements VtjService {
         }
         
         if (vtjHenkilo.getVakinainenKotimainenOsoite() != null) {
-            StringBuffer postiOsoite = new StringBuffer();
+            StringBuffer postiOsoiteS = new StringBuffer();
+            StringBuffer postiOsoiteR = new StringBuffer();
             
-            postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS());
-            postiOsoite.append(" ");
-            postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatunumero());
-            if (vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain() != null) {
-                postiOsoite.append(" ");
-                postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain());
+            if (vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS() != null) {
+                postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS());
+                postiOsoiteS.append(" ");
+                postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatunumero());
+                if (vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain() != null) {
+                    postiOsoiteS.append(" ");
+                    postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain());
+                }
+                if (vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero() != null) {
+                    postiOsoiteS.append(" ");
+                    postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero());
+                }
+                if (vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain() != null) {
+                    postiOsoiteS.append(" ");
+                    postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain());
+                }
             }
-            if (vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero() != null) {
-                postiOsoite.append(" ");
-                postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero());
-            }
-            if (vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain() != null) {
-                postiOsoite.append(" ");
-                postiOsoite.append(vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain());
+            
+            if (vtjHenkilo.getVakinainenKotimainenOsoite().getKatuR() != null) {
+                postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS());
+                postiOsoiteR.append(" ");
+                postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatunumero());
+                if (vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain() != null) {
+                    postiOsoiteR.append(" ");
+                    postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain());
+                }
+                if (vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero() != null) {
+                    postiOsoiteR.append(" ");
+                    postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero());
+                }
+                if (vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain() != null) {
+                    postiOsoiteR.append(" ");
+                    postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain());
+                }
             }
             
             YksiloityHenkilo.OsoiteTieto kotimaanOsoite = henkilo.new OsoiteTieto(
-                    "VTJ:n kotimaan osoite",
-                    postiOsoite.toString(),
+                    "yhteystietotyyppi4",
+                    postiOsoiteS.toString(),
+                    postiOsoiteR.toString(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostinumero(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaS(),
-                    "Suomi");
+                    vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaR(),
+                    "Suomi",
+                    "Finland");
             henkilo.addOsoiteTieto(kotimaanOsoite);
         }
         
         if (vtjHenkilo.getVakinainenUlkomainenOsoite() != null) {
             YksiloityHenkilo.OsoiteTieto ulkomaanOsoite = henkilo.new OsoiteTieto(
-                    "VTJ:n ulkomaan osoite",
+                    "yhteystietotyyppi5",
                     vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenLahiosoite(),
                     null,
+                    null,
                     vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenPaikkakunta(),
-                    vtjHenkilo.getVakinainenUlkomainenOsoite().getValtioS());
+                    null,
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getValtioS(),
+                    vtjHenkilo.getVakinainenUlkomainenOsoite().getValtioR());
             henkilo.addOsoiteTieto(ulkomaanOsoite);
         }
         
