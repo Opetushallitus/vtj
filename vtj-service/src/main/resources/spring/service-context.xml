@@ -2,18 +2,36 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:http="http://cxf.apache.org/transports/http/configuration"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
        xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:cxf="http://cxf.apache.org/core"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
     ">
 
     <context:annotation-config/>
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-extension-http.xml" />
+
+    <http:conduit name="*.http-conduit">
+        <http:tlsClientParameters>
+            <sec:keyManagers keyPassword="${vtj.keystore.password}">
+                <sec:keyStore file="${vtj.keystore.file}" type="jks" password="${vtj.keystore.password}"  />
+            </sec:keyManagers>
+            <sec:trustManagers>
+                <sec:keyStore file="${vtj.truststore.file}" type="jks" password="${vtj.truststore.password}" />
+            </sec:trustManagers>
+            <sec:certAlias>${vtj.cert.alias}</sec:certAlias>
+        </http:tlsClientParameters>
+    </http:conduit>
 
     <jaxws:client id="soSoSoap" serviceClass="org.tempuri.SoSoSoap" address="${vtj.address}" />
 
