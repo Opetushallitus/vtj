@@ -19,7 +19,7 @@
     <context:annotation-config/>
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-extension-http.xml" />
+<!--     <import resource="classpath:META-INF/cxf/cxf-extension-http.xml" /> -->
 
     <http:conduit name="*.http-conduit">
         <http:tlsClientParameters>
@@ -29,7 +29,8 @@
             <sec:trustManagers>
                 <sec:keyStore file="${vtj.truststore.file}" type="jks" password="${vtj.truststore.password}" />
             </sec:trustManagers>
-            <sec:certAlias>${vtj.cert.alias}</sec:certAlias>
+            <!-- HUOM!! TÄMÄ ARVO EI JOSTAIN SYYSTÄ LATAUDU UUDEMMASSA SECURITYN VERSIOSSA!! -->
+<!--             <sec:certAlias>${vtj.cert.alias}</sec:certAlias> -->
         </http:tlsClientParameters>
     </http:conduit>
 
