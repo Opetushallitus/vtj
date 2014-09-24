@@ -29,8 +29,7 @@
             <sec:trustManagers>
                 <sec:keyStore file="${vtj.truststore.file}" type="jks" password="${vtj.truststore.password}" />
             </sec:trustManagers>
-            <!-- HUOM!! TÄMÄ ARVO EI JOSTAIN SYYSTÄ LATAUDU UUDEMMASSA SECURITYN VERSIOSSA!! -->
-<!--            <sec:certAlias>${vtj.cert.alias}</sec:certAlias> -->
+            <sec:certAlias>${vtj.cert.alias}</sec:certAlias>
         </http:tlsClientParameters>
     </http:conduit>
 
