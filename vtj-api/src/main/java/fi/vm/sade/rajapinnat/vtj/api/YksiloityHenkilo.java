@@ -130,41 +130,63 @@ public class YksiloityHenkilo implements Serializable {
 
         private String tyyppi;
 
-        private String katuosoite;
+        private String katuosoiteS;
 
-        private String kaupunki;
+        private String katuosoiteR;
+
+        private String kaupunkiS;
+
+        private String kaupunkiR;
 
         private String postinumero;
 
-        private String maa;
+        private String maaS;
 
-        public OsoiteTieto(String tyyppi, String katuosoite,
-                String postinumero, String kaupunki, String maa) {
+        private String maaR;
+
+        public OsoiteTieto(String tyyppi, String katuosoiteS,
+                String katuosoiteR, String postinumero, String kaupunkiS,
+                String kaupunkiR, String maaS, String maaR) {
             this.tyyppi = tyyppi;
-            this.katuosoite = katuosoite;
+            this.katuosoiteS = katuosoiteS;
+            this.katuosoiteR = katuosoiteR;
             this.postinumero = postinumero;
-            this.kaupunki = kaupunki;
-            this.maa = maa;
+            this.kaupunkiS = kaupunkiS;
+            this.kaupunkiR = kaupunkiR;
+            this.maaS = maaS;
+            this.maaR = maaR;
         }
 
         public String getTyyppi() {
             return tyyppi;
         }
 
-        public String getKatuosoite() {
-            return katuosoite;
+        public String getKatuosoiteS() {
+            return katuosoiteS;
         }
 
-        public String getKaupunki() {
-            return kaupunki;
+        public String getKaupunkiS() {
+            return kaupunkiS;
+        }
+
+        public String getMaaS() {
+            return maaS;
+        }
+
+        public String getKatuosoiteR() {
+            return katuosoiteR;
+        }
+
+        public String getKaupunkiR() {
+            return kaupunkiR;
+        }
+
+        public String getMaaR() {
+            return maaR;
         }
 
         public String getPostinumero() {
             return postinumero;
-        }
-
-        public String getMaa() {
-            return maa;
         }
     }
 }
