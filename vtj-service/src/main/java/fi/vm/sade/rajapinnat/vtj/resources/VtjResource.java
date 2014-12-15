@@ -21,11 +21,6 @@ import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vm.sade.rajapinnat.vtj.service.VtjTestData;
 
-/**
- * User: tommiha
- * Date: 8/5/13
- * Time: 1:00 PM
- */
 @Component
 @Path("vtj")
 @PreAuthorize("isAuthenticated()")

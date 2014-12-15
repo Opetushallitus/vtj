@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: tommiha
- * Date: 8/26/13
- * Time: 1:46 PM
- */
 public class YksiloityHenkilo implements Serializable {
 
     private static final long serialVersionUID = 8789597334053850029L;
