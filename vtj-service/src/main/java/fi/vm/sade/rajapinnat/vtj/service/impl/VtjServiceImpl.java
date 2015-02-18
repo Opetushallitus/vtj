@@ -63,7 +63,10 @@ public class VtjServiceImpl implements VtjService {
         
         henkilo.setEtunimi(vtjHenkilo.getNykyisetEtunimet().getEtunimet());
         henkilo.setSukunimi(vtjHenkilo.getNykyinenSukunimi().getSukunimi());
-        henkilo.setKutsumanimi(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi());
+        if(!vtjHenkilo.getNykyisetEtunimet().equals(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi()) &&
+                !vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi().trim().contains(" ")) {
+            henkilo.setKutsumanimi(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi());
+        }
 
         String turvakieltoTieto = vtjHenkilo.getTurvakielto().getTurvakieltoTieto();
         henkilo.setTurvakielto(turvakieltoTieto.equals("1") ? true : false);
