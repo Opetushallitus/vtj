@@ -123,7 +123,7 @@ public class VtjTestDataImpl implements VtjTestData{
         }
         for(String changingDatahetu : changingDataHetus) {
             if (hetu.matches(changingDatahetu)) {
-                return createNewYH(hetu, null, null, null, Sukupuoli.MIES, true, null, null, null, null, null, null, "Suomi", "Finland");
+                return createNewYH(hetu, null, null, null, Sukupuoli.MIES, true, null, null, null, null, null, null, "Suomi", "Finland", "246");
             }
         }
         // Vastauksena pitää aina löytyä henkilö tai palauttaa virhe!!
