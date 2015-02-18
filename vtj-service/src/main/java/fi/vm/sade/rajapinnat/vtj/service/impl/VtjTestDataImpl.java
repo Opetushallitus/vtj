@@ -118,6 +118,7 @@ public class VtjTestDataImpl implements VtjTestData{
                         result.addOsoiteTieto(osoite);
                     }
                 }
+                result.getKansalaisuusKoodit().addAll(yh.getKansalaisuusKoodit());
                 return result;
             }
         }
