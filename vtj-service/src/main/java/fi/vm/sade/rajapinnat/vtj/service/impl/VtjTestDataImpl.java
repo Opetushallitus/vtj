@@ -118,7 +118,9 @@ public class VtjTestDataImpl implements VtjTestData{
                         result.addOsoiteTieto(osoite);
                     }
                 }
-                result.getKansalaisuusKoodit().addAll(yh.getKansalaisuusKoodit());
+                for(String kansalaisuusKoodi : yh.getKansalaisuusKoodit()) {
+                    result.addKansalaisuusKoodi(kansalaisuusKoodi);
+                }
                 return result;
             }
         }
