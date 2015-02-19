@@ -67,8 +67,7 @@ public class VtjServiceImpl implements VtjService {
         henkilo.setTurvakielto(turvakieltoTieto.equals("1") ? true : false);
         henkilo.setHetu(vtjHenkilo.getHenkilotunnus().getValue());
 
-        String sukupuolikoodi = vtjHenkilo.getSukupuoli().getSukupuolikoodi();
-        henkilo.setSukupuoli(sukupuolikoodi.equals("2") ? YksiloityHenkilo.Sukupuoli.NAINEN : YksiloityHenkilo.Sukupuoli.MIES);
+        henkilo.setSukupuoli(vtjHenkilo.getSukupuoli().getSukupuolikoodi());
         
         henkilo.setAidinkieliKoodi(vtjHenkilo.getAidinkieli().getKielikoodi());
         

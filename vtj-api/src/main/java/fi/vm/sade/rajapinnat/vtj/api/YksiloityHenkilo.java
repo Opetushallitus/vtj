@@ -13,10 +13,6 @@ public class YksiloityHenkilo implements Serializable {
 
     private static final long serialVersionUID = 8789597334053850029L;
 
-    public static enum Sukupuoli {
-        MIES, NAINEN
-    }
-
     private String etunimi;
 
     private String kutsumanimi;
@@ -25,7 +21,7 @@ public class YksiloityHenkilo implements Serializable {
 
     private String hetu;
 
-    private Sukupuoli sukupuoli;
+    private String sukupuoli;
 
     private boolean turvakielto;
 
@@ -45,11 +41,11 @@ public class YksiloityHenkilo implements Serializable {
         this.hetu = hetu;
     }
 
-    public Sukupuoli getSukupuoli() {
+    public String getSukupuoli() {
         return sukupuoli;
     }
 
-    public void setSukupuoli(Sukupuoli sukupuoli) {
+    public void setSukupuoli(String sukupuoli) {
         this.sukupuoli = sukupuoli;
     }
 
