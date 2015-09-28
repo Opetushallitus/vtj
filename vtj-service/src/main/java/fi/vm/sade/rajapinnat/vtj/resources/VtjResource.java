@@ -9,6 +9,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import fi.vm.sade.auditlog.haku.HakuOperation;
+import fi.vm.sade.auditlog.vtj.VtjOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +22,7 @@ import fi.vm.sade.rajapinnat.vtj.NotFoundException;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vm.sade.rajapinnat.vtj.service.VtjTestData;
+import static fi.vm.sade.rajapinnat.vtj.AuditHelper.*;
 
 /**
  * User: tommiha
@@ -55,7 +58,12 @@ public class VtjResource {
             else {
                 yksiloityHenkilo = vtjTestData.teeHakuTestidatasta(hetu);
             }
-            
+
+            AUDIT.log(builder()
+                    .hetu(hetu)
+                    .setOperaatio(VtjOperation.HENKILOTIETO_HAKU)
+                    .build());
+
             return Response.ok(yksiloityHenkilo).build();
         }
         catch (NotFoundException e) {
