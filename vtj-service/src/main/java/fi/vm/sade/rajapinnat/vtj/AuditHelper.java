@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.security.Principal;
 
 public class AuditHelper {
-    public static final Audit AUDIT = new Audit("vtj-service", ApplicationType.BACKEND);
+    public static final Audit AUDIT = new Audit("vtj-service", ApplicationType.VIRKAILIJA);
 
     public static LogMessage.LogMessageBuilder builder() {
         return LogMessage.builder().id(getUsernameFromSession());
