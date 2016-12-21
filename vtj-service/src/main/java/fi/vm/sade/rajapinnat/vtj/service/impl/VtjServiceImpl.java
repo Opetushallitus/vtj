@@ -22,24 +22,51 @@ import java.io.IOException;
  */
 public class VtjServiceImpl implements VtjService {
 
+    private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
+
     private SoSoSoap soSoSoap;
     private String kayttajatunnus;
     private String salasana;
-    private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
     private ObjectMapper objectMapper = new ObjectMapper();
-    
+
     @Cacheable(value = "vtj", key = "#hetu")
     public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu, boolean logMessage) {
-        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu);
+        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu, 0);
         return convert(vastaus, logMessage);
     }
 
-    private VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu) {
+    private VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu, int depth) {
         TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult tunnusKyselyResult = soSoSoap.teeHenkilonTunnusKysely("OPHREK", kayttajatunnus, salasana, loppukayttaja, null, hetu, null, null, null, null, null, null, null);
         VTJHenkiloVastaussanoma vastaus = (VTJHenkiloVastaussanoma) tunnusKyselyResult.getContent().get(0);
-        if("0001".equals(vastaus.getPaluukoodi().getKoodi())) {
+
+        try {
+            logger.debug("Response from VTJ for hetu '" + hetu + "': " + objectMapper.writeValueAsString(vastaus));
+        } catch (IOException e) {
+            logger.error("Couldn't log received message", e);
+        }
+
+        // paluukoodit: https://github.com/Opetushallitus/rajapinnat/blob/8e1faa038a61d67a4e98c4897bc9013aa218f81a/vtj/vtj-remote-api/src/main/resources/wsdl/VTJHenkilotiedotKatalogi.xsd#L608-L643
+        String paluuKoodi = vastaus.getPaluukoodi().getKoodi();
+
+        // tarkistetaan onko henkilön hetu muuttunut
+        if ("0002".equals(paluuKoodi)) {
+            String uusiHetu = vastaus.getHenkilo().getHenkilotunnus().getValue();
+            if (!uusiHetu.equals(hetu)) {
+                if(depth > 1) {
+                    // todennäköisesti virhe datassa, lopeta rekursio
+                    throw new NotFoundException("Query with passive hetu should not return another passive hetu.");
+                }
+
+                logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
+                // haetaan tiedot uudestaan uudella hetulla
+                return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, ++depth);
+            }
+        }
+        // kaikki paluukoodit paitsi 0000 ja 0002 käsitellään virheinä
+        else if (!"0000".equals(paluuKoodi)) {
             throw new NotFoundException("Could not find person.");
         }
+
         return vastaus;
     }
 
@@ -65,6 +92,7 @@ public class VtjServiceImpl implements VtjService {
 
         String turvakieltoTieto = vtjHenkilo.getTurvakielto().getTurvakieltoTieto();
         henkilo.setTurvakielto(turvakieltoTieto.equals("1") ? true : false);
+
         henkilo.setHetu(vtjHenkilo.getHenkilotunnus().getValue());
 
         henkilo.setSukupuoli(vtjHenkilo.getSukupuoli().getSukupuolikoodi());
