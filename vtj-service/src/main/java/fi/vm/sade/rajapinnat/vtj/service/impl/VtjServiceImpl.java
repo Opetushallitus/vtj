@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 import org.tempuri.SoSoSoap;
 import org.tempuri.TeeHenkilonTunnusKyselyResponse;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
  * Date: 6/26/13
  * Time: 2:23 PM
  */
+
 public class VtjServiceImpl implements VtjService {
 
     private static Logger logger = LoggerFactory.getLogger(VtjServiceImpl.class);
@@ -45,21 +47,32 @@ public class VtjServiceImpl implements VtjService {
             logger.error("Couldn't log received message", e);
         }
 
+        if (vastaus == null) {
+            throw new NotFoundException("Invalid response from VTJ");
+        }
+
         // paluukoodit: https://github.com/Opetushallitus/rajapinnat/blob/8e1faa038a61d67a4e98c4897bc9013aa218f81a/vtj/vtj-remote-api/src/main/resources/wsdl/VTJHenkilotiedotKatalogi.xsd#L608-L643
-        String paluuKoodi = vastaus.getPaluukoodi().getKoodi();
+        String paluuKoodi = vastaus.getPaluukoodi() != null ? vastaus.getPaluukoodi().getKoodi() : null;
 
         // tarkistetaan onko henkilön hetu muuttunut
         if ("0002".equals(paluuKoodi)) {
-            String uusiHetu = vastaus.getHenkilo().getHenkilotunnus().getValue();
-            if (!uusiHetu.equals(hetu)) {
-                if(depth > 1) {
-                    // todennäköisesti virhe datassa, lopeta rekursio
-                    throw new NotFoundException("Query with passive hetu should not return another passive hetu.");
-                }
+            String uusiHetu = (vastaus.getHenkilo() != null && vastaus.getHenkilo().getHenkilotunnus() != null) ?
+                    vastaus.getHenkilo().getHenkilotunnus().getValue() : null;
+            if (uusiHetu != null) {
+                if (!uusiHetu.equals(hetu)) {
+                    if(depth > 1) {
+                        // todennäköisesti virhe datassa, lopeta rekursio
+                        throw new NotFoundException("Query with passive hetu should not return another passive hetu.");
+                    }
 
-                logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
-                // haetaan tiedot uudestaan uudella hetulla
-                return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, ++depth);
+                    logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
+                    // haetaan tiedot uudestaan uudella hetulla
+                    return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, ++depth);
+
+                }
+            }
+            else {
+                throw new NotFoundException("Invalid response from VTJ");
             }
         }
         // kaikki paluukoodit paitsi 0000 ja 0002 käsitellään virheinä
