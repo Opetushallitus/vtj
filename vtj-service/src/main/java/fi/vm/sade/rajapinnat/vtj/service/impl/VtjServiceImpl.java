@@ -10,7 +10,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
 import org.tempuri.SoSoSoap;
 import org.tempuri.TeeHenkilonTunnusKyselyResponse;
 
@@ -33,11 +32,11 @@ public class VtjServiceImpl implements VtjService {
 
     @Cacheable(value = "vtj", key = "#hetu")
     public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu, boolean logMessage) {
-        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu, 0);
+        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu, false);
         return convert(vastaus, logMessage);
     }
 
-    private VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu, int depth) {
+    public VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu, boolean retried) {
         TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult tunnusKyselyResult = soSoSoap.teeHenkilonTunnusKysely("OPHREK", kayttajatunnus, salasana, loppukayttaja, null, hetu, null, null, null, null, null, null, null);
         VTJHenkiloVastaussanoma vastaus = (VTJHenkiloVastaussanoma) tunnusKyselyResult.getContent().get(0);
 
@@ -60,19 +59,15 @@ public class VtjServiceImpl implements VtjService {
                     vastaus.getHenkilo().getHenkilotunnus().getValue() : null;
             if (uusiHetu != null) {
                 if (!uusiHetu.equals(hetu)) {
-                    if(depth > 1) {
+                    if(retried) {
                         // todennäköisesti virhe datassa, lopeta rekursio
-                        throw new NotFoundException("Query with passive hetu should not return another passive hetu.");
+                        throw new NotFoundException("Query with a new active hetu should not return another new active hetu.");
                     }
 
                     logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
                     // haetaan tiedot uudestaan uudella hetulla
-                    return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, ++depth);
-
+                    return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true);
                 }
-            }
-            else {
-                throw new NotFoundException("Invalid response from VTJ");
             }
         }
         // kaikki paluukoodit paitsi 0000 ja 0002 käsitellään virheinä
