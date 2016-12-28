@@ -57,17 +57,15 @@ public class VtjServiceImpl implements VtjService {
         if ("0002".equals(paluuKoodi)) {
             String uusiHetu = (vastaus.getHenkilo() != null && vastaus.getHenkilo().getHenkilotunnus() != null) ?
                     vastaus.getHenkilo().getHenkilotunnus().getValue() : null;
-            if (uusiHetu != null) {
-                if (!uusiHetu.equals(hetu)) {
-                    if(retried) {
-                        // todennäköisesti virhe datassa, lopeta rekursio
-                        throw new NotFoundException("Query with a new active hetu should not return another new active hetu.");
-                    }
-
-                    logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
-                    // haetaan tiedot uudestaan uudella hetulla
-                    return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true);
+            if (uusiHetu != null && !uusiHetu.equals(hetu)) {
+                if(retried) {
+                    // todennäköisesti virhe datassa, lopeta rekursio
+                    throw new NotFoundException("Query with a new active hetu should not return another new active hetu.");
                 }
+
+                logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
+                // haetaan tiedot uudestaan uudella hetulla
+                return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true);
             }
         }
         // kaikki paluukoodit paitsi 0000 ja 0002 käsitellään virheinä
