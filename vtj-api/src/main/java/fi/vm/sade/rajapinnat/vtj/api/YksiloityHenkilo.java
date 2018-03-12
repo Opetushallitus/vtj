@@ -33,6 +33,8 @@ public class YksiloityHenkilo implements Serializable {
 
     private List<OsoiteTieto> osoitteet;
 
+    private String kotikunta;
+
     public String getHetu() {
         return hetu;
     }
@@ -109,6 +111,14 @@ public class YksiloityHenkilo implements Serializable {
             this.osoitteet = new ArrayList<YksiloityHenkilo.OsoiteTieto>();
         }
         this.osoitteet.add(osoite);
+    }
+
+    public String getKotikunta() {
+        return kotikunta;
+    }
+
+    public void setKotikunta(String kotikunta) {
+        this.kotikunta = kotikunta;
     }
 
     public String getSahkoposti() {

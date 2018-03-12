@@ -179,7 +179,11 @@ public class VtjServiceImpl implements VtjService {
                     vtjHenkilo.getVakinainenUlkomainenOsoite().getValtioR());
             henkilo.addOsoiteTieto(ulkomaanOsoite);
         }
-        
+
+        if (vtjHenkilo.getKotikunta() != null) {
+            henkilo.setKotikunta(vtjHenkilo.getKotikunta().getKuntanumero());
+        }
+
         return henkilo;
     }
 
