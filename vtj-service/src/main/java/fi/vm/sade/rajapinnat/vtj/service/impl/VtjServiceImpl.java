@@ -14,6 +14,7 @@ import org.tempuri.SoSoSoap;
 import org.tempuri.TeeHenkilonTunnusKyselyResponse;
 
 import java.io.IOException;
+import org.springframework.util.StringUtils;
 
 /**
  * User: tommiha
@@ -118,7 +119,9 @@ public class VtjServiceImpl implements VtjService {
         if (vtjHenkilo.getVakinainenKotimainenOsoite() != null) {
             StringBuffer postiOsoiteS = new StringBuffer();
             StringBuffer postiOsoiteR = new StringBuffer();
-            
+
+            String huoneistonumero = StringUtils.trimLeadingCharacter(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero(), '0');
+
             if (vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS() != null) {
                 postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getKatuS());
                 postiOsoiteS.append(" ");
@@ -127,9 +130,9 @@ public class VtjServiceImpl implements VtjService {
                     postiOsoiteS.append(" ");
                     postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain());
                 }
-                if (vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero() != null) {
+                if (StringUtils.hasLength(huoneistonumero)) {
                     postiOsoiteS.append(" ");
-                    postiOsoiteS.append(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero());
+                    postiOsoiteS.append(huoneistonumero);
                 }
                 if (vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain() != null) {
                     postiOsoiteS.append(" ");
@@ -145,9 +148,9 @@ public class VtjServiceImpl implements VtjService {
                     postiOsoiteR.append(" ");
                     postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getPorraskirjain());
                 }
-                if (vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero() != null) {
+                if (StringUtils.hasLength(huoneistonumero)) {
                     postiOsoiteR.append(" ");
-                    postiOsoiteR.append(vtjHenkilo.getVakinainenKotimainenOsoite().getHuoneistonumero());
+                    postiOsoiteR.append(huoneistonumero);
                 }
                 if (vtjHenkilo.getVakinainenKotimainenOsoite().getJakokirjain() != null) {
                     postiOsoiteR.append(" ");
@@ -157,8 +160,8 @@ public class VtjServiceImpl implements VtjService {
             
             YksiloityHenkilo.OsoiteTieto kotimaanOsoite = henkilo.new OsoiteTieto(
                     "yhteystietotyyppi4",
-                    postiOsoiteS.toString(),
-                    postiOsoiteR.toString(),
+                    postiOsoiteS.toString().trim(),
+                    postiOsoiteR.toString().trim(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostinumero(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaS(),
                     vtjHenkilo.getVakinainenKotimainenOsoite().getPostitoimipaikkaR(),
