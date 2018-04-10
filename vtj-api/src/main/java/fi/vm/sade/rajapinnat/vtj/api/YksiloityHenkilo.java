@@ -2,7 +2,9 @@ package fi.vm.sade.rajapinnat.vtj.api;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * User: tommiha
@@ -18,6 +20,8 @@ public class YksiloityHenkilo implements Serializable {
     private String kutsumanimi;
 
     private String sukunimi;
+
+    private List<EntinenNimi> entisetNimet;
 
     private String hetu;
 
@@ -81,6 +85,14 @@ public class YksiloityHenkilo implements Serializable {
 
     public void setKutsumanimi(String kutsumanimi) {
         this.kutsumanimi = kutsumanimi;
+    }
+
+    public List<EntinenNimi> getEntisetNimet() {
+        return entisetNimet;
+    }
+
+    public void setEntisetNimet(List<EntinenNimi> entisetNimet) {
+        this.entisetNimet = entisetNimet;
     }
 
     public String getAidinkieliKoodi() {
@@ -194,5 +206,69 @@ public class YksiloityHenkilo implements Serializable {
         public String getPostinumero() {
             return postinumero;
         }
+    }
+
+    public static class EntinenNimi {
+
+        private final EntinenNimiTyyppi tyyppi;
+        private final String arvo;
+
+        public EntinenNimi(EntinenNimiTyyppi tyyppi, String arvo) {
+            this.tyyppi = tyyppi;
+            this.arvo = arvo;
+        }
+
+        public EntinenNimiTyyppi getTyyppi() {
+            return tyyppi;
+        }
+
+        public String getArvo() {
+            return arvo;
+        }
+
+        public boolean isSukunimi() {
+            return tyyppi.isSukunimi();
+        }
+
+    }
+
+    public static enum EntinenNimiTyyppi {
+        TUNTEMATON(""),
+        ENTINEN_SUKUNIMI("05"),
+        ENTISET_ETUNIMET("06"),
+        VIIMEKSI_NAIMATTOMANA_OLLESSA_OLLUT_SUKUNIMI("07"),
+        ENTINEN_VALINIMI("08"),
+        ENTINEN_KUTSUMANIMI("09"),
+        KORJATTU_SUKUNIMI("10"),
+        KORJATUT_ETUNIMET("11"),
+        KORJATTU_VALINIMI("12"),
+        KORJATTU_KUTSUMANIMI("13"),
+        ;
+
+        private static final Set<EntinenNimiTyyppi> SUKUNIMET = EnumSet.of(
+                ENTINEN_SUKUNIMI, VIIMEKSI_NAIMATTOMANA_OLLESSA_OLLUT_SUKUNIMI, KORJATTU_SUKUNIMI);
+        private final String koodi;
+
+        private EntinenNimiTyyppi(String koodi) {
+            this.koodi = koodi;
+        }
+
+        public static EntinenNimiTyyppi getByKoodi(String koodi) {
+            for (EntinenNimiTyyppi tyyppi : EntinenNimiTyyppi.values()) {
+                if (tyyppi.getKoodi().equals(koodi)) {
+                    return tyyppi;
+                }
+            }
+            return EntinenNimiTyyppi.TUNTEMATON;
+        }
+
+        public String getKoodi() {
+            return koodi;
+        }
+
+        public boolean isSukunimi() {
+            return SUKUNIMET.contains(this);
+        }
+
     }
 }

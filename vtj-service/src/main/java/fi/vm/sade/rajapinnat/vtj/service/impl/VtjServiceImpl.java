@@ -2,6 +2,7 @@ package fi.vm.sade.rajapinnat.vtj.service.impl;
 
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
+import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo.EntinenNimiTyyppi;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo;
@@ -14,6 +15,8 @@ import org.tempuri.SoSoSoap;
 import org.tempuri.TeeHenkilonTunnusKyselyResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.util.StringUtils;
 
 /**
@@ -95,6 +98,14 @@ public class VtjServiceImpl implements VtjService {
         if(!vtjHenkilo.getNykyisetEtunimet().equals(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi()) &&
                 !vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi().trim().contains(" ")) {
             henkilo.setKutsumanimi(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi());
+        }
+        if (vtjHenkilo.getEntinenNimi() != null) {
+            List<YksiloityHenkilo.EntinenNimi> entisetNimet = new ArrayList<>();
+            for (Henkilo.EntinenNimi entinenNimi : vtjHenkilo.getEntinenNimi()) {
+                EntinenNimiTyyppi tyyppi = EntinenNimiTyyppi.getByKoodi(entinenNimi.getNimilajikoodi());
+                entisetNimet.add(new YksiloityHenkilo.EntinenNimi(tyyppi, entinenNimi.getNimi()));
+            }
+            henkilo.setEntisetNimet(entisetNimet);
         }
 
         String turvakieltoTieto = vtjHenkilo.getTurvakielto().getTurvakieltoTieto();
