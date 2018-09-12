@@ -1,6 +1,7 @@
 package fi.vm.sade.rajapinnat.vtj.service.impl;
 
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
+import fi.vm.sade.rajapinnat.vtj.api.Huoltaja;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo.EntinenNimiTyyppi;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
@@ -17,6 +18,8 @@ import org.tempuri.TeeHenkilonTunnusKyselyResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.util.StringUtils;
 
 /**
@@ -196,6 +199,17 @@ public class VtjServiceImpl implements VtjService {
 
         if (vtjHenkilo.getKotikunta() != null) {
             henkilo.setKotikunta(vtjHenkilo.getKotikunta().getKuntanumero());
+        }
+
+        if (vtjHenkilo.getHuoltaja() != null) {
+            List<Huoltaja> huoltajat = vtjHenkilo.getHuoltaja().stream()
+                    .map(vtjHuoltaja -> new Huoltaja(
+                            vtjHenkilo.getNykyisetEtunimet().getEtunimet(),
+                            vtjHenkilo.getNykyinenSukunimi().getSukunimi(),
+                            vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi(),
+                            vtjHenkilo.getHenkilotunnus().getValue()))
+                    .collect(Collectors.toList());
+            henkilo.setHuoltajat(huoltajat);
         }
 
         return henkilo;

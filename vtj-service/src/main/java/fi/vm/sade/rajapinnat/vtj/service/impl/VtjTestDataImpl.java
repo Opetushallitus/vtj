@@ -65,7 +65,7 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("291281-999H", "Dennis Kaj",                  null,       "Koljonen",          "1", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("150151-998U", "Maj Evi",                     null,       "Lindell",           "2", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("251199-999S", "Eric Andrew",                 "Andrew",    "Pettersson",      "1", false, null, null, null, null, null, null, null, null, "246"));
-        testData.add(createNewYH("250678-999A", "Waldemar Olli-Pekka Andres ", "Andres",    "Haanpää",          "1", false, null, null, null, null, null, null, null, null, "246"));
+        testData.add(createNewYH("250678-999A", "Waldemar Olli-Pekka Andres ", "Andres",    "Haanpää",          "1", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("181003A999N", "Ronny Bengt Thomas",          "Bengt",     "Setälä",           "1", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("150478-9987", "Minja Ella Nenna",            "Ella",      "Kolari",           "2", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("081078-999K", "Holger Raineri Kaino",        "Raineri",   "Soikkeli",        "1", false, null, null, null, null, null, null, null, null, "246"));
@@ -73,9 +73,9 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("041248-999V", "Bengt Valtteri",              "Valtteri",  "Koskela",         "1", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("230896-9988", "Sofi Ira Kukka-Maaria",       "Ira",       "Lyytinen",        "2", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("270474-999Y", "Robert Yrjö",                 "Yrjö",      "Hannula",         "1", false, null, null, null, null, null, null, null, null, "246"));
-        testData.add(createNewYH("160582-998P", "Lahja Nicole",                "Nicole",    "Kontkanen ",       "2", false, null, null, null, null, null, null, null, null, "246"));
+        testData.add(createNewYH("160582-998P", "Lahja Nicole",                "Nicole",    "Kontkanen ",       "2", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("110360-9986", "Maija Aniitta",               "Aniitta",   "Hurskainen",       "2", false, null, null, null, null, null, null, null, null, "246"));
-        testData.add(createNewYH("271062-999P", "Pekka Joel",                 "Joel",      "Rautiainen ",       "1", false, null, null, null, null, null, null, null, null, "246"));
+        testData.add(createNewYH("271062-999P", "Pekka Joel",                 "Joel",      "Rautiainen ",       "1", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("240984-999M", "Rikhard Niila",               "Niila",     "Huusko",           "1", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("130486-9980", "Linda Neea",                 "Neea",      "Kuusinen",          "2", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("090369-9998", "Lenni Håkan",                 "Håkan",     "Kaukonen",         "2", false, null, null, null, null, null, null, null, null, "246"));
