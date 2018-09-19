@@ -1,5 +1,7 @@
 package fi.vm.sade.rajapinnat.vtj.api;
 
+import java.util.Arrays;
+
 /**
  * Henkilön huoltaja
  */
@@ -8,19 +10,19 @@ public class Huoltaja {
 
     private String sukunimi;
 
-    private String kutsumanimi;
-
     private String hetu;
+
+    private String huoltajuustyyppiKoodi;
 
     public Huoltaja() {
 
     }
 
-    public Huoltaja(String etunimi, String sukunimi, String kutsumanimi, String hetu) {
+    public Huoltaja(String etunimi, String sukunimi, String hetu, String huoltajuustyyppiKoodi) {
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;
-        this.kutsumanimi = kutsumanimi;
         this.hetu = hetu;
+        this.huoltajuustyyppiKoodi = huoltajuustyyppiKoodi;
     }
 
     public String getEtunimi() {
@@ -48,10 +50,14 @@ public class Huoltaja {
     }
 
     public String getKutsumanimi() {
-        return kutsumanimi;
+        return this.etunimi == null ? null : Arrays.stream(this.etunimi.split(" ")).findFirst().orElse(null);
     }
 
-    public void setKutsumanimi(String kutsumanimi) {
-        this.kutsumanimi = kutsumanimi;
+    public String getHuoltajuustyyppiKoodi() {
+        return huoltajuustyyppiKoodi;
+    }
+
+    public void setHuoltajuustyyppiKoodi(String huoltajuustyyppiKoodi) {
+        this.huoltajuustyyppiKoodi = huoltajuustyyppiKoodi;
     }
 }

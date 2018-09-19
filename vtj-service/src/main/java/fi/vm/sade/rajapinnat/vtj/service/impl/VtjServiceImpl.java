@@ -204,10 +204,10 @@ public class VtjServiceImpl implements VtjService {
         if (vtjHenkilo.getHuoltaja() != null) {
             List<Huoltaja> huoltajat = vtjHenkilo.getHuoltaja().stream()
                     .map(vtjHuoltaja -> new Huoltaja(
-                            vtjHenkilo.getNykyisetEtunimet().getEtunimet(),
-                            vtjHenkilo.getNykyinenSukunimi().getSukunimi(),
-                            vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi(),
-                            vtjHenkilo.getHenkilotunnus().getValue()))
+                            vtjHuoltaja.getNykyisetEtunimet().getEtunimet(),
+                            vtjHuoltaja.getNykyinenSukunimi().getSukunimi(),
+                            vtjHuoltaja.getHenkilotunnus(),
+                            vtjHuoltaja.getHuoltotiedot().getHenkilosuhdelajikoodi()))
                     .collect(Collectors.toList());
             henkilo.setHuoltajat(huoltajat);
         }
