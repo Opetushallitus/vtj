@@ -75,8 +75,8 @@ public class VtjServiceImpl implements VtjService {
                 return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true);
             }
         }
-        // kaikki paluukoodit paitsi 0000 ja 0002 käsitellään virheinä
-        else if (!"0000".equals(paluuKoodi)) {
+        // kaikki paluukoodit paitsi 0000, 0018 ja 0002 käsitellään virheinä
+        else if (!"0000".equals(paluuKoodi) && !"0018".equals(paluuKoodi)) {
             throw new NotFoundException("Could not find person.");
         }
 

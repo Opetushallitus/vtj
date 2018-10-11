@@ -51,7 +51,7 @@ public class VtjServiceTest {
         TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult result =
                 Mockito.mock(TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult.class);
         when(result.getContent())
-                .thenReturn(new ArrayList<Object>(Arrays.asList(createVastausSanomaWithPaluukoodi0000(hetu))));
+                .thenReturn(new ArrayList<>(Arrays.asList(createVastausSanomaWithPaluukoodi0000(hetu))));
 
         when(soSoSoap.teeHenkilonTunnusKysely("OPHREK", null, null, "", null, hetu, null, null, null, null, null, null, null))
                 .thenReturn(result);
