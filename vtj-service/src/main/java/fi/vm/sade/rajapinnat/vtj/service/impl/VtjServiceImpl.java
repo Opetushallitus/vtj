@@ -112,7 +112,7 @@ public class VtjServiceImpl implements VtjService {
         }
 
         String turvakieltoTieto = vtjHenkilo.getTurvakielto().getTurvakieltoTieto();
-        henkilo.setTurvakielto(turvakieltoTieto.equals("1") ? true : false);
+        henkilo.setTurvakielto("1".equals(turvakieltoTieto));
 
         henkilo.setHetu(vtjHenkilo.getHenkilotunnus().getValue());
 
@@ -208,6 +208,7 @@ public class VtjServiceImpl implements VtjService {
                             vtjHuoltaja.getNykyinenSukunimi().getSukunimi(),
                             vtjHuoltaja.getHenkilotunnus(),
                             vtjHuoltaja.getHuoltotiedot().getHenkilosuhdelajikoodi()))
+                    .filter(huoltaja -> StringUtils.hasLength(huoltaja.getHuoltajuustyyppiKoodi()))
                     .collect(Collectors.toList());
             henkilo.setHuoltajat(huoltajat);
         }
