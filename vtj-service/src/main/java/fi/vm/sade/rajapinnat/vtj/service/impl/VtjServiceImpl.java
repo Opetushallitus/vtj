@@ -65,6 +65,9 @@ public class VtjServiceImpl implements VtjService {
             case "0000":
             case "0018":
                 return vastaus;
+            case "0001":
+            case "0006":
+                throw new NotFoundException("Could not find person.");
             case "0002":
                 // tarkistetaan onko henkilön hetu muuttunut
                 String uusiHetu = (vastaus.getHenkilo() != null && vastaus.getHenkilo().getHenkilotunnus() != null) ?
@@ -81,7 +84,9 @@ public class VtjServiceImpl implements VtjService {
                 }
                 throw new NotFoundException("Could not find person.");
             default:
-                throw new NotFoundException("Could not find person.");
+                logger.warn("Unknown response code {} for hetu '{}'", paluuKoodi, hetu);
+                // taaksepäin yhteensopivuuden vuoksi heitetään NotFoundException
+                throw new NotFoundException("Unknown response code '" + paluuKoodi +"'.");
         }
     }
 

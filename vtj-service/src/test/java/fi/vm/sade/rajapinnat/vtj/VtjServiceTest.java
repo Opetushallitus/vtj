@@ -152,6 +152,32 @@ public class VtjServiceTest {
         verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", newHetu, true, false);
     }
 
+    @Test
+    public void testHenkilonTunnusKyselyTuntematon() {
+        expectedEx.expect(NotFoundException.class);
+        expectedEx.expectMessage("Unknown response code 'tuntematon'.");
+
+        TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult result =
+                Mockito.mock(TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult.class);
+        when(result.getContent())
+                .thenReturn(new ArrayList<Object>(Arrays.asList(createVastausSanomaWithPaluukoodi("tuntematon"))));
+
+        when(soSoSoap.teeHenkilonTunnusKysely("OPHREK", null, null, "", null, "111111-1111", null, null, null, null, null, null, null))
+                .thenReturn(result);
+
+        vtjService.teeHenkiloKysely("", "111111-1111", false);
+    }
+
+    private VTJHenkiloVastaussanoma createVastausSanomaWithPaluukoodi(String tuntematon) {
+        VTJHenkiloVastaussanoma.Paluukoodi paluukoodi = new VTJHenkiloVastaussanoma.Paluukoodi();
+        paluukoodi.setKoodi(tuntematon);
+
+        VTJHenkiloVastaussanoma vtjHenkiloVastaussanoma = new VTJHenkiloVastaussanoma();
+        vtjHenkiloVastaussanoma.setPaluukoodi(paluukoodi);
+
+        return vtjHenkiloVastaussanoma;
+    }
+
     private VTJHenkiloVastaussanoma createVastausSanomaWithPaluukoodi0000(String hetu) {
         VTJHenkiloVastaussanoma.Paluukoodi paluukoodi = new VTJHenkiloVastaussanoma.Paluukoodi();
         paluukoodi.setKoodi("0000");
