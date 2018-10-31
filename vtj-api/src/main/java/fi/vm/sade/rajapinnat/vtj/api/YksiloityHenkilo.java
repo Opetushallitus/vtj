@@ -15,6 +15,8 @@ public class YksiloityHenkilo implements Serializable {
 
     private static final long serialVersionUID = 8789597334053850029L;
 
+    private boolean passivoitu;
+
     private String etunimi;
 
     private String kutsumanimi;
@@ -40,6 +42,14 @@ public class YksiloityHenkilo implements Serializable {
     private String kotikunta;
 
     private List<Huoltaja> huoltajat = new ArrayList<>();
+
+    public boolean isPassivoitu() {
+        return passivoitu;
+    }
+
+    public void setPassivoitu(boolean passivoitu) {
+        this.passivoitu = passivoitu;
+    }
 
     public String getHetu() {
         return hetu;

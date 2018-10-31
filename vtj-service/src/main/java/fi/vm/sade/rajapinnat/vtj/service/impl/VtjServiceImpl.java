@@ -4,6 +4,7 @@ import fi.vm.sade.rajapinnat.vtj.NotFoundException;
 import fi.vm.sade.rajapinnat.vtj.api.Huoltaja;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo.EntinenNimiTyyppi;
+import fi.vm.sade.rajapinnat.vtj.PassivoituException;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma;
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma.Henkilo;
@@ -82,7 +83,7 @@ public class VtjServiceImpl implements VtjService {
                     // haetaan tiedot uudestaan uudella hetulla
                     return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true, logMessage);
                 }
-                throw new NotFoundException("Could not find person.");
+                throw new PassivoituException();
             default:
                 logger.warn("Unknown response code {} for hetu '{}'", paluuKoodi, hetu);
                 // taaksepäin yhteensopivuuden vuoksi heitetään NotFoundException
@@ -94,7 +95,7 @@ public class VtjServiceImpl implements VtjService {
         
         YksiloityHenkilo henkilo = new YksiloityHenkilo();
         Henkilo vtjHenkilo = vastaus.getHenkilo();
-        
+
         henkilo.setEtunimi(vtjHenkilo.getNykyisetEtunimet().getEtunimet());
         henkilo.setSukunimi(vtjHenkilo.getNykyinenSukunimi().getSukunimi());
         if(!vtjHenkilo.getNykyisetEtunimet().equals(vtjHenkilo.getNykyinenKutsumanimi().getKutsumanimi()) &&

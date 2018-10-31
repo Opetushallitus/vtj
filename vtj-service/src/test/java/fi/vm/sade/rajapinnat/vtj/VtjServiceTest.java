@@ -80,6 +80,8 @@ public class VtjServiceTest {
 
     @Test
     public void testHenkilonTunnusKysely0002NoNewHetu() {
+        expectedEx.expect(PassivoituException.class);
+
         String hetu = "111111-1111";
 
         TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult result =
@@ -100,16 +102,21 @@ public class VtjServiceTest {
         String oldHetu = "111111-1111";
         String newHetu = "222222-2222";
 
-        TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult result =
+        TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult oldResult =
                 Mockito.mock(TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult.class);
-        when(result.getContent())
+        when(oldResult.getContent())
                 .thenReturn(new ArrayList<Object>(Arrays.asList(createVastausSanomaWithPaluukoodi0002(newHetu))));
 
         when(soSoSoap.teeHenkilonTunnusKysely("OPHREK", null, null, "", null, oldHetu, null, null, null, null, null, null, null))
-                .thenReturn(result);
+                .thenReturn(oldResult);
+
+        TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult newResult =
+                Mockito.mock(TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult.class);
+        when(newResult.getContent())
+                .thenReturn(new ArrayList<Object>(Arrays.asList(createVastausSanomaWithPaluukoodi0000(newHetu))));
 
         when(soSoSoap.teeHenkilonTunnusKysely("OPHREK", null, null, "", null, newHetu, null, null, null, null, null, null, null))
-                .thenReturn(result);
+                .thenReturn(newResult);
 
         vtjService = spy(vtjService);
 

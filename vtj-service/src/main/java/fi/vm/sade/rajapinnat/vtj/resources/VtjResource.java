@@ -9,8 +9,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import fi.vm.sade.auditlog.haku.HakuOperation;
 import fi.vm.sade.auditlog.vtj.VtjOperation;
+import fi.vm.sade.rajapinnat.vtj.PassivoituException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -68,6 +68,11 @@ public class VtjResource {
         }
         catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        catch (PassivoituException e) {
+            YksiloityHenkilo yksiloityHenkilo = new YksiloityHenkilo();
+            yksiloityHenkilo.setPassivoitu(true);
+            return Response.ok(yksiloityHenkilo).build();
         }
     }
 }
