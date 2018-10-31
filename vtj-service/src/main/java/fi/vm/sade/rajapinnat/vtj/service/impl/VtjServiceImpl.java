@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.util.StringUtils;
 import org.tempuri.SoSoSoap;
 import org.tempuri.TeeHenkilonTunnusKyselyResponse;
 
@@ -19,8 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.util.StringUtils;
 
 /**
  * User: tommiha
@@ -39,18 +38,20 @@ public class VtjServiceImpl implements VtjService {
 
     @Cacheable(value = "vtj", key = "#hetu")
     public YksiloityHenkilo teeHenkiloKysely(String loppukayttaja, String hetu, boolean logMessage) {
-        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu, false);
-        return convert(vastaus, logMessage);
+        VTJHenkiloVastaussanoma vastaus = getVtjHenkiloVastaussanoma(loppukayttaja, hetu, false, logMessage);
+        return convert(vastaus);
     }
 
-    public VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu, boolean retried) {
+    public VTJHenkiloVastaussanoma getVtjHenkiloVastaussanoma(String loppukayttaja, String hetu, boolean retried, boolean logMessage) {
         TeeHenkilonTunnusKyselyResponse.TeeHenkilonTunnusKyselyResult tunnusKyselyResult = soSoSoap.teeHenkilonTunnusKysely("OPHREK", kayttajatunnus, salasana, loppukayttaja, null, hetu, null, null, null, null, null, null, null);
         VTJHenkiloVastaussanoma vastaus = (VTJHenkiloVastaussanoma) tunnusKyselyResult.getContent().get(0);
 
-        try {
-            logger.debug("Response from VTJ for hetu '" + hetu + "': " + objectMapper.writeValueAsString(vastaus));
-        } catch (IOException e) {
-            logger.error("Couldn't log received message", e);
+        if (logMessage) {
+            try {
+                logger.info("Response from VTJ for hetu '{}': {}", hetu, objectMapper.writeValueAsString(vastaus));
+            } catch (IOException e) {
+                logger.error("Couldn't log received message", e);
+            }
         }
 
         if (vastaus == null) {
@@ -72,7 +73,7 @@ public class VtjServiceImpl implements VtjService {
 
                 logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
                 // haetaan tiedot uudestaan uudella hetulla
-                return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true);
+                return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true, logMessage);
             }
         }
         // kaikki paluukoodit paitsi 0000, 0018 ja 0002 käsitellään virheinä
@@ -83,18 +84,10 @@ public class VtjServiceImpl implements VtjService {
         return vastaus;
     }
 
-    private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus, boolean logMessage) {
+    private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus) {
         
         YksiloityHenkilo henkilo = new YksiloityHenkilo();
         Henkilo vtjHenkilo = vastaus.getHenkilo();
-        
-        if (logMessage) {
-            try {
-                logger.info(objectMapper.writeValueAsString(vtjHenkilo));
-            } catch (IOException e) {
-                logger.error("Couldn't log received message", e);
-            }
-        }
         
         henkilo.setEtunimi(vtjHenkilo.getNykyisetEtunimet().getEtunimet());
         henkilo.setSukunimi(vtjHenkilo.getNykyinenSukunimi().getSukunimi());

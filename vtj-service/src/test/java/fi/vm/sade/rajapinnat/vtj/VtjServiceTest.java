@@ -116,8 +116,8 @@ public class VtjServiceTest {
         YksiloityHenkilo yksiloityHenkilo = vtjService.teeHenkiloKysely("", oldHetu, false);
 
         verify(vtjService, times(1)).teeHenkiloKysely("", oldHetu, false);
-        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", oldHetu, false);
-        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", newHetu, true);
+        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", oldHetu, false, false);
+        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", newHetu, true, false);
 
         assertEquals(yksiloityHenkilo.getHetu(), newHetu);
     }
@@ -148,8 +148,8 @@ public class VtjServiceTest {
         vtjService.teeHenkiloKysely("", oldHetu, false);
 
         verify(vtjService, times(1)).teeHenkiloKysely("", oldHetu, false);
-        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", oldHetu, false);
-        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", newHetu, true);
+        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", oldHetu, false, false);
+        verify(vtjService, times(1)).getVtjHenkiloVastaussanoma("", newHetu, true, false);
     }
 
     private VTJHenkiloVastaussanoma createVastausSanomaWithPaluukoodi0000(String hetu) {
