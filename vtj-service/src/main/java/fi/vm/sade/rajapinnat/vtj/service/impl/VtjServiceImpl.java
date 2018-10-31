@@ -61,27 +61,28 @@ public class VtjServiceImpl implements VtjService {
         // paluukoodit: https://github.com/Opetushallitus/rajapinnat/blob/8e1faa038a61d67a4e98c4897bc9013aa218f81a/vtj/vtj-remote-api/src/main/resources/wsdl/VTJHenkilotiedotKatalogi.xsd#L608-L643
         String paluuKoodi = vastaus.getPaluukoodi() != null ? vastaus.getPaluukoodi().getKoodi() : null;
 
-        // tarkistetaan onko henkilön hetu muuttunut
-        if ("0002".equals(paluuKoodi)) {
-            String uusiHetu = (vastaus.getHenkilo() != null && vastaus.getHenkilo().getHenkilotunnus() != null) ?
-                    vastaus.getHenkilo().getHenkilotunnus().getValue() : null;
-            if (uusiHetu != null && !uusiHetu.equals(hetu)) {
-                if(retried) {
-                    // todennäköisesti virhe datassa, lopeta rekursio
-                    throw new NotFoundException("Query with a new active hetu should not return another new active hetu.");
+        switch (paluuKoodi) {
+            case "0000":
+            case "0018":
+                return vastaus;
+            case "0002":
+                // tarkistetaan onko henkilön hetu muuttunut
+                String uusiHetu = (vastaus.getHenkilo() != null && vastaus.getHenkilo().getHenkilotunnus() != null) ?
+                        vastaus.getHenkilo().getHenkilotunnus().getValue() : null;
+                if (uusiHetu != null && !uusiHetu.equals(hetu)) {
+                    if(retried) {
+                        // todennäköisesti virhe datassa, lopeta rekursio
+                        throw new NotFoundException("Query with a new active hetu should not return another new active hetu.");
+                    }
+
+                    logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
+                    // haetaan tiedot uudestaan uudella hetulla
+                    return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true, logMessage);
                 }
-
-                logger.info("Hetu has changed for a person. Old: " + hetu + ", new: " + uusiHetu);
-                // haetaan tiedot uudestaan uudella hetulla
-                return getVtjHenkiloVastaussanoma(loppukayttaja, uusiHetu, true, logMessage);
-            }
+                throw new NotFoundException("Could not find person.");
+            default:
+                throw new NotFoundException("Could not find person.");
         }
-        // kaikki paluukoodit paitsi 0000, 0018 ja 0002 käsitellään virheinä
-        else if (!"0000".equals(paluuKoodi) && !"0018".equals(paluuKoodi)) {
-            throw new NotFoundException("Could not find person.");
-        }
-
-        return vastaus;
     }
 
     private YksiloityHenkilo convert(VTJHenkiloVastaussanoma vastaus) {
