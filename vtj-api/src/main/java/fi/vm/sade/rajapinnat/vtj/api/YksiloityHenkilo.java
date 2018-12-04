@@ -6,11 +6,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * User: tommiha
- * Date: 8/26/13
- * Time: 1:46 PM
- */
 public class YksiloityHenkilo implements Serializable {
 
     private static final long serialVersionUID = 8789597334053850029L;
@@ -162,7 +157,7 @@ public class YksiloityHenkilo implements Serializable {
     }
 
 
-    public class OsoiteTieto {
+    public static class OsoiteTieto {
 
         private String tyyppi;
 
@@ -179,6 +174,10 @@ public class YksiloityHenkilo implements Serializable {
         private String maaS;
 
         private String maaR;
+
+        public OsoiteTieto() {
+
+        }
 
         public OsoiteTieto(String tyyppi, String katuosoiteS,
                 String katuosoiteR, String postinumero, String kaupunkiS,
@@ -228,16 +227,28 @@ public class YksiloityHenkilo implements Serializable {
 
     public static class EntinenNimi {
 
-        private final EntinenNimiTyyppi tyyppi;
-        private final String arvo;
+        private EntinenNimiTyyppi tyyppi;
+        private String arvo;
+
+        public EntinenNimi() {
+
+        }
 
         public EntinenNimi(EntinenNimiTyyppi tyyppi, String arvo) {
             this.tyyppi = tyyppi;
             this.arvo = arvo;
         }
 
+        public void setTyyppi(EntinenNimiTyyppi tyyppi) {
+            this.tyyppi = tyyppi;
+        }
+
         public EntinenNimiTyyppi getTyyppi() {
             return tyyppi;
+        }
+
+        public void setArvo(String arvo) {
+            this.arvo = arvo;
         }
 
         public String getArvo() {

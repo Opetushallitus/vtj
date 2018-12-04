@@ -172,7 +172,7 @@ public class VtjServiceImpl implements VtjService {
                 }
             }
             
-            YksiloityHenkilo.OsoiteTieto kotimaanOsoite = henkilo.new OsoiteTieto(
+            YksiloityHenkilo.OsoiteTieto kotimaanOsoite = new YksiloityHenkilo.OsoiteTieto(
                     "yhteystietotyyppi4",
                     postiOsoiteS.toString().trim(),
                     postiOsoiteR.toString().trim(),
@@ -185,7 +185,7 @@ public class VtjServiceImpl implements VtjService {
         }
         
         if (vtjHenkilo.getVakinainenUlkomainenOsoite() != null) {
-            YksiloityHenkilo.OsoiteTieto ulkomaanOsoite = henkilo.new OsoiteTieto(
+            YksiloityHenkilo.OsoiteTieto ulkomaanOsoite = new YksiloityHenkilo.OsoiteTieto(
                     "yhteystietotyyppi5",
                     vtjHenkilo.getVakinainenUlkomainenOsoite().getUlkomainenLahiosoite(),
                     null,

@@ -157,7 +157,7 @@ public class VtjTestDataImpl implements VtjTestData{
             yh.setSukunimi(sukunimet[counter % 2]);
             counter++;
             yh.setKutsumanimi(yh.getEtunimi().split(" ")[randInt(0,1)]);
-            yh.addOsoiteTieto(yh.new OsoiteTieto("yhteystietotyyppi4",
+            yh.addOsoiteTieto(new YksiloityHenkilo.OsoiteTieto("yhteystietotyyppi4",
                                                  katuosoitteet[randInt(0,2)],
                                                  katuosoitteet[randInt(0,2)],
                                                  new Integer(randInt(10000, 20000)).toString(),
@@ -175,7 +175,7 @@ public class VtjTestDataImpl implements VtjTestData{
             yh.addKansalaisuusKoodi("246");
             if (katuosoiteS != null || postinumero != null || kaupunkiS != null || maaS != null ||
                     katuosoiteR != null || kaupunkiR != null || maaR != null) {
-                yh.addOsoiteTieto(yh.new OsoiteTieto("yhteystietotyyppi4",
+                yh.addOsoiteTieto(new YksiloityHenkilo.OsoiteTieto("yhteystietotyyppi4",
                                                       katuosoiteS,
                                                       katuosoiteR,
                                                       postinumero,
