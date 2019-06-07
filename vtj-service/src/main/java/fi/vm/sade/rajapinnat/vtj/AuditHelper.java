@@ -1,13 +1,9 @@
 package fi.vm.sade.rajapinnat.vtj;
 
-import fi.vm.sade.auditlog.ApplicationType;
-import fi.vm.sade.auditlog.Audit;
 import fi.vm.sade.auditlog.User;
 import fi.vm.sade.javautils.http.HttpServletRequestUtils;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.Oid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,9 +13,6 @@ import java.security.Principal;
 import java.util.Optional;
 
 public class AuditHelper {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuditHelper.class);
-    public static final Audit AUDIT = new Audit(LOGGER::info, "vtj-service", ApplicationType.VIRKAILIJA);
 
     public static User getUser(HttpServletRequest request) {
         Optional<Oid> oid = getOid(request);

@@ -2,6 +2,7 @@ package fi.vm.sade.rajapinnat.vtj.resources;
 
 import fi.vm.sade.auditlog.Changes;
 import fi.vm.sade.auditlog.Target;
+import fi.vm.sade.rajapinnat.vtj.AuditLogger;
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
 import fi.vm.sade.rajapinnat.vtj.PassivoituException;
 import fi.vm.sade.rajapinnat.vtj.VtjOperation;
@@ -21,7 +22,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static fi.vm.sade.rajapinnat.vtj.AuditHelper.AUDIT;
 import static fi.vm.sade.rajapinnat.vtj.AuditHelper.getUser;
 
 /**
@@ -39,6 +39,9 @@ public class VtjResource {
     
     @Autowired
     private VtjTestData vtjTestData;
+
+    @Autowired
+    private AuditLogger auditLogger;
     
     @Value("${vtj.production.env}")
     private boolean productionEnv;
@@ -62,7 +65,7 @@ public class VtjResource {
 
             Target target = new Target.Builder().setField("hetu", hetu).build();
             Changes changes = new Changes.Builder().build();
-            AUDIT.log(getUser(request), VtjOperation.HENKILOTIETO_HAKU, target, changes);
+            auditLogger.log(getUser(request), VtjOperation.HENKILOTIETO_HAKU, target, changes);
 
             return Response.ok(yksiloityHenkilo).build();
         }
