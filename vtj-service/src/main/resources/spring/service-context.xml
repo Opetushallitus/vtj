@@ -44,4 +44,6 @@
     <bean id="vtjTestData" class="fi.vm.sade.rajapinnat.vtj.service.impl.VtjTestDataImpl">
     </bean>
 
+    <bean id="auditLogger" class="fi.vm.sade.rajapinnat.vtj.AuditLogger" />
+
 </beans>
