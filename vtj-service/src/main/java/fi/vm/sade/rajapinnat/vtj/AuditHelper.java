@@ -2,27 +2,72 @@ package fi.vm.sade.rajapinnat.vtj;
 
 import fi.vm.sade.auditlog.ApplicationType;
 import fi.vm.sade.auditlog.Audit;
-import fi.vm.sade.auditlog.vtj.LogMessage;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import fi.vm.sade.auditlog.User;
+import fi.vm.sade.javautils.http.HttpServletRequestUtils;
+import org.ietf.jgss.GSSException;
+import org.ietf.jgss.Oid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.Principal;
+import java.util.Optional;
 
 public class AuditHelper {
-    public static final Audit AUDIT = new Audit("vtj-service", ApplicationType.VIRKAILIJA);
 
-    public static LogMessage.LogMessageBuilder builder() {
-        return LogMessage.builder().id(getUsernameFromSession());
-    }
-    private static String getUsernameFromSession() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        if(context != null) {
-            Principal p = (Principal) context.getAuthentication();
-            if(p != null) {
-                return p.getName();
-            }
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuditHelper.class);
+    public static final Audit AUDIT = new Audit(LOGGER::info, "vtj-service", ApplicationType.VIRKAILIJA);
+
+    public static User getUser(HttpServletRequest request) {
+        Optional<Oid> oid = getOid(request);
+        InetAddress ip = getIp(request);
+        String session = getSession(request).orElse(null);
+        String userAgent = getUserAgent(request).orElse(null);
+
+        if (oid.isPresent()) {
+            return new User(oid.get(), ip, session, userAgent);
+        } else {
+            return new User(ip, session, userAgent);
         }
-        return "Anonymous user";
+    }
+
+    public static Optional<Oid> getOid(HttpServletRequest request) {
+        return Optional.ofNullable(request.getUserPrincipal()).map(Principal::getName).flatMap(AuditHelper::createOid);
+    }
+
+    private static Optional<Oid> createOid(String oid) {
+        try {
+            return Optional.of(new Oid(oid));
+        } catch (GSSException e) {
+            return Optional.empty();
+        }
+    }
+
+    public static InetAddress getIp(HttpServletRequest request) {
+        try {
+            return InetAddress.getByName(HttpServletRequestUtils.getRemoteAddress(request));
+        } catch (UnknownHostException e) {
+            return getIp();
+        }
+    }
+
+    public static InetAddress getIp() {
+        try {
+            return InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            return InetAddress.getLoopbackAddress();
+        }
+    }
+
+    public static Optional<String> getSession(HttpServletRequest request) {
+        return Optional.ofNullable(request.getSession(false)).map(HttpSession::getId);
+    }
+
+    public static Optional<String> getUserAgent(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader("User-Agent"));
     }
 
 }
