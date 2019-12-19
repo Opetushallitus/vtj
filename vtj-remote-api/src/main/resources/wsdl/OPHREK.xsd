@@ -3,7 +3,7 @@
 	<xs:import namespace="http://xml.vrk.fi/schema/vtj/henkilotiedot/1" schemaLocation="VTJHenkilotiedotKatalogi.xsd"/>
 	<xs:element name="VTJHenkiloVastaussanoma">
 		<xs:annotation>
-			<xs:documentation>OPHREK 1532013_-_Opetushallituksen_soso_Tallennettu:_3_11_2013_5:07:00_PM_Muutettu_viimeksi:_3_15_2013_1:15:00_PM</xs:documentation>
+			<xs:documentation>OPHREK 1532013_-_Opetushallituksen_soso_Tallennettu:_1132013_17:07:00_Muutettu_viimeksi:_1532013_13:15:00</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -424,6 +424,15 @@
 										<xs:element name="ValtioS" type="vtj:ValtioNimiTyyppi"/>
 										<xs:element name="ValtioR" type="vtj:ValtioNimiTyyppi"/>
 										<xs:element name="ValtioSelvakielinen" type="vtj:ValtioNimi30Tyyppi"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Huollettava" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Henkilotunnus" type="vtj:HenkilotunnusTyyppi"/>
+										<xs:element name="Sukunimi" type="vtj:Nimi100Tyyppi"/>
+										<xs:element name="Etunimet" type="vtj:Nimi100Tyyppi"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
