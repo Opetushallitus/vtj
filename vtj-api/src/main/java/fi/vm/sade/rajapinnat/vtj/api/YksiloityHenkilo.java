@@ -38,6 +38,8 @@ public class YksiloityHenkilo implements Serializable {
 
     private List<Huoltaja> huoltajat = new ArrayList<>();
 
+    private List<Huollettava> huollettavat = new ArrayList<>();
+
     public boolean isPassivoitu() {
         return passivoitu;
     }
@@ -156,6 +158,13 @@ public class YksiloityHenkilo implements Serializable {
         this.huoltajat = huoltajat;
     }
 
+    public List<Huollettava> getHuollettavat() {
+        return huollettavat;
+    }
+
+    public void setHuollettavat(List<Huollettava> huollettavat) {
+       this.huollettavat = huollettavat;
+    }
 
     public static class OsoiteTieto {
 

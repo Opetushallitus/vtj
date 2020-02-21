@@ -1,6 +1,7 @@
 package fi.vm.sade.rajapinnat.vtj.service.impl;
 
 import fi.vm.sade.rajapinnat.vtj.NotFoundException;
+import fi.vm.sade.rajapinnat.vtj.api.Huollettava;
 import fi.vm.sade.rajapinnat.vtj.api.Huoltaja;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo.EntinenNimiTyyppi;
@@ -212,6 +213,12 @@ public class VtjServiceImpl implements VtjService {
                     .collect(Collectors.toList());
             henkilo.setHuoltajat(huoltajat);
         }
+
+        List<Huollettava> huollettavat = vtjHenkilo.getHuollettava().stream()
+            .filter(vtjHuollettava -> StringUtils.hasText(vtjHuollettava.getHenkilotunnus()))
+            .map(vtjHuollettava -> new Huollettava(vtjHuollettava.getEtunimet(), vtjHuollettava.getSukunimi(), vtjHuollettava.getHenkilotunnus()))
+            .collect(Collectors.toList());
+        henkilo.setHuollettavat(huollettavat);
 
         return henkilo;
     }
