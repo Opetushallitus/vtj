@@ -5,6 +5,10 @@ public class Huollettava {
     private String sukunimi;
     private String hetu;
 
+    public Huollettava() {
+
+    }
+
     public Huollettava(String etunimet, String sukunimi, String hetu) {
         this.etunimet = etunimet;
         this.sukunimi = sukunimi;
