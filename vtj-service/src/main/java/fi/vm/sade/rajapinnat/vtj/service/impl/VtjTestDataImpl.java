@@ -1,12 +1,15 @@
 package fi.vm.sade.rajapinnat.vtj.service.impl;
 
+import fi.vm.sade.rajapinnat.vtj.NotFoundException;
+import fi.vm.sade.rajapinnat.vtj.api.Huollettava;
+import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
+import fi.vm.sade.rajapinnat.vtj.service.VtjTestData;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import fi.vm.sade.rajapinnat.vtj.NotFoundException;
-import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
-import fi.vm.sade.rajapinnat.vtj.service.VtjTestData;
+import static java.util.Arrays.asList;
 
 public class VtjTestDataImpl implements VtjTestData{
 
@@ -86,7 +89,7 @@ public class VtjTestDataImpl implements VtjTestData{
         testData.add(createNewYH("150894-967K", "Seppo",                       "Seppo",    "Testaaja",          "1", false, null, null, null, null, null, null, null, null, "246"));
         //Vetuma
         testData.add(createNewYH("010101-123N", "Teemu",                       "Teemu",    "Testaaja",          "1", false, null, null, null, null, null, null, null, null, "246"));
-        testData.add(createNewYH("210281-9988", "NORDEA",                      "NORDEA",   "DEMO",              "2", false,null, null, null, null, null, null, null, null, "246"));
+        testData.add(createNewYH("210281-9988", "NORDEA",                      "NORDEA",   "DEMO",              "2", false,null, null, null, null, null, null, null, null, "246", asList(huollettava("Pekka", "Demo", "190306A9850"), huollettava("Liisa", "Demo", "190308A948A"))));
         testData.add(createNewYH("081181-9984", "ANNA",                        "ANNA",     "TESTI",             "2", false, null, null, null, null, null, null, null, null, "246"));
         testData.add(createNewYH("010170-960F", "Maija",                       "Maija",    "Meikäläinen",       "2", false, null, null, null, null, null, null, null, null, "246"));
         //VTJ-update-tests static
@@ -120,6 +123,7 @@ public class VtjTestDataImpl implements VtjTestData{
                 for(String kansalaisuusKoodi : yh.getKansalaisuusKoodit()) {
                     result.addKansalaisuusKoodi(kansalaisuusKoodi);
                 }
+                result.setHuollettavat(yh.getHuollettavat());
                 return result;
             }
         }
@@ -147,7 +151,8 @@ public class VtjTestDataImpl implements VtjTestData{
                                           String kaupunkiR,
                                           String maaS,
                                           String maaR,
-                                          String kansalaisuusKoodi
+                                          String kansalaisuusKoodi,
+                                          List<Huollettava> huollettavat
                                           ) {
         YksiloityHenkilo yh = new YksiloityHenkilo();
 
@@ -185,10 +190,36 @@ public class VtjTestDataImpl implements VtjTestData{
                                                       maaR));
             }
             yh.setSahkoposti(sahkoposti);
+            yh.setHuollettavat(huollettavat);
         }
         yh.setHetu(hetu);
         yh.setSukupuoli(sukupuoli);
         return yh;
+    }
+
+    private static YksiloityHenkilo createNewYH(String hetu,
+                                                String etunimi,
+                                                String kutsumanimi,
+                                                String sukunimi,
+                                                String sukupuoli,
+                                                boolean random,
+                                                String sahkoposti,
+                                                //Osoitetieto
+                                                String katuosoiteS,
+                                                String katuosoiteR,
+                                                String postinumero,
+                                                String kaupunkiS,
+                                                String kaupunkiR,
+                                                String maaS,
+                                                String maaR,
+                                                String kansalaisuusKoodi
+    ) {
+        return createNewYH(hetu, etunimi, kutsumanimi, sukunimi, sukupuoli, random, sahkoposti, katuosoiteS, katuosoiteR, postinumero, kaupunkiS, kaupunkiR, maaS, maaR, kansalaisuusKoodi, new ArrayList<>());
+    }
+
+
+    private static Huollettava huollettava(String etunimet, String sukunimi, String hetu) {
+        return new Huollettava(etunimet, sukunimi, hetu);
     }
 
     private static int randInt(int min, int max) {
