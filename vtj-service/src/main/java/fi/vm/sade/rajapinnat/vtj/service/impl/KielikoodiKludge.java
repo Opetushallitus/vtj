@@ -21,11 +21,7 @@ public class KielikoodiKludge {
      * @return oikea kielikoodi; joko annettu tai korjattu, mikäli annettu oli virheellinen.
      */
     public static String korjaaVirheellinenKoodi(String kielikoodi) {
-        if (kielikoodi == null) {
-            return null;
-        }
-        String korjattu = VIRHEELLINEN_KORJATTU.get(kielikoodi.toLowerCase());
-        return korjattu != null ? korjattu : kielikoodi;
+        return kielikoodi == null ? null : VIRHEELLINEN_KORJATTU.getOrDefault(kielikoodi.toLowerCase(), kielikoodi);
     }
 
 }
