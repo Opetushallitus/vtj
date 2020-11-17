@@ -119,7 +119,7 @@ public class VtjServiceImpl implements VtjService {
 
         henkilo.setSukupuoli(vtjHenkilo.getSukupuoli().getSukupuolikoodi());
         
-        henkilo.setAidinkieliKoodi(vtjHenkilo.getAidinkieli().getKielikoodi());
+        henkilo.setAidinkieliKoodi(KielikoodiKludge.korjaaVirheellinenKoodi(vtjHenkilo.getAidinkieli().getKielikoodi()));
         
         if (vtjHenkilo.getSahkopostiosoite() != null) {
             henkilo.setSahkoposti(vtjHenkilo.getSahkopostiosoite());
