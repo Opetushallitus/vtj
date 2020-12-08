@@ -20,8 +20,8 @@
     </modules>
 
     <properties>
-        <spring.version>3.2.18.RELEASE</spring.version>
-        <spring.security.version>3.2.10.RELEASE</spring.security.version>
+        <spring.version>4.3.29.RELEASE</spring.version>
+        <spring.security.version>4.2.19.RELEASE</spring.security.version>
     </properties>
 
 </project>
