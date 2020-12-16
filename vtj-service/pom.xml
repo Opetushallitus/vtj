@@ -14,16 +14,33 @@
     <packaging>war</packaging>
 
     <properties>
-        <deploy.to.server>tomcat</deploy.to.server>
         <webapp.port>8081</webapp.port>
         <slf4j.version>1.6.1</slf4j.version>
         <log4j.version>1.2.14</log4j.version>
         <jersey.version>1.19.4</jersey.version>
         <cxf.version>2.7.18</cxf.version>
+        <tomcat.version>7.0.107</tomcat.version>
     </properties>
 
     <build>
         <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <configuration>
+                        <containerId>tomcat7x</containerId>
+                        <containerUrl>https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/${tomcat.version}/tomcat-${tomcat.version}.zip</containerUrl>
+                        <configuration>
+                            <properties>
+                                <cargo.servlet.port>${webapp.port}</cargo.servlet.port>
+                            </properties>
+                        </configuration>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
@@ -237,5 +254,4 @@
             <version>${cxf.version}</version>
         </dependency>
     </dependencies>
-    
 </project>

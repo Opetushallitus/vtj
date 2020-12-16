@@ -16,7 +16,7 @@
         <property name="properties">
             <util:properties local-override="true">
                 <prop key="cas_key">vtj-service</prop>
-                <prop key="cas_service">${cas.service.vtj-service}</prop>
+                <prop key="cas_service">${cas.service.vtj-service:https\://${host.cas}/vtj-service}</prop>
                 <prop key="spring_security_default_access">permitAll</prop>
             </util:properties>
         </property>
