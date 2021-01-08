@@ -7,46 +7,42 @@
     <parent>
         <groupId>fi.vm.sade.rajapinnat</groupId>
         <artifactId>vtj</artifactId>
-        <version>14.0-SNAPSHOT</version>
+        <version>2021.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>vtj-service</artifactId>
     <packaging>war</packaging>
 
     <properties>
-        <webapp.port>8081</webapp.port>
-        <slf4j.version>1.6.1</slf4j.version>
-        <log4j.version>1.2.14</log4j.version>
-        <jersey.version>1.19.4</jersey.version>
+        <auditlog.api.version>8.3.0-SNAPSHOT</auditlog.api.version>
         <cxf.version>2.7.18</cxf.version>
-        <tomcat.version>7.0.107</tomcat.version>
+        <ehcache.version>2.5.2</ehcache.version>
+        <generic.version>9.5-SNAPSHOT</generic.version>
+        <jersey.version>1.19.4</jersey.version>
+        <junit.version>4.13.1</junit.version>
+        <log4j.version>1.2.14</log4j.version>
+        <mockito.version>1.9.0</mockito.version>
+        <servlet.version>3.0.1</servlet.version>
+        <slf4j.version>1.6.1</slf4j.version>
+        <spring.version>4.3.29.RELEASE</spring.version>
+        <spring.security.version>4.2.19.RELEASE</spring.security.version>
     </properties>
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.cargo</groupId>
-                    <artifactId>cargo-maven2-plugin</artifactId>
-                    <configuration>
-                        <containerId>tomcat7x</containerId>
-                        <containerUrl>https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/${tomcat.version}/tomcat-${tomcat.version}.zip</containerUrl>
-                        <configuration>
-                            <properties>
-                                <cargo.servlet.port>${webapp.port}</cargo.servlet.port>
-                            </properties>
-                        </configuration>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
     <dependencies>
         <dependency>
             <groupId>org.jasig.cas.client</groupId>
             <artifactId>cas-client-support-distributed-ehcache</artifactId>
+            <version>3.1.12</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jasig.cas</groupId>
@@ -157,6 +153,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

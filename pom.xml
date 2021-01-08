@@ -6,7 +6,7 @@
 
     <artifactId>vtj</artifactId>
     <groupId>fi.vm.sade.rajapinnat</groupId>
-    <version>14.0-SNAPSHOT</version>
+    <version>2021.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,8 +20,8 @@
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <maven.compiler.debug>true</maven.compiler.debug>
         <maven.compiler.release>11</maven.compiler.release>
-        <spring.version>4.3.29.RELEASE</spring.version>
-        <spring.security.version>4.2.19.RELEASE</spring.security.version>
+
+        <cxf.version>3.4.1</cxf.version>
 
         <!-- buildversion.txt -->
         <buildNumber/>
@@ -52,32 +52,76 @@
 
     <build>
         <pluginManagement>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <directory>../src/main/resources</directory>
-                            <excludes>
-                                <exclude>**/buildversion.txt</exclude>
-                            </excludes>
-                            <targetPath>WEB-INF/classes</targetPath>
-                            <filtering>false</filtering>
-                        </resource>
-                        <resource>
-                            <directory>../src/main/resources</directory>
-                            <includes>
-                                <include>**/buildversion.txt</include>
-                            </includes>
-                            <targetPath>/</targetPath>
-                            <filtering>true</filtering>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <configuration>
+                        <webResources>
+                            <resource>
+                                <directory>../src/main/resources</directory>
+                                <excludes>
+                                    <exclude>**/buildversion.txt</exclude>
+                                </excludes>
+                                <targetPath>WEB-INF/classes</targetPath>
+                                <filtering>false</filtering>
+                            </resource>
+                            <resource>
+                                <directory>../src/main/resources</directory>
+                                <includes>
+                                    <include>**/buildversion.txt</include>
+                                </includes>
+                                <targetPath>/</targetPath>
+                                <filtering>true</filtering>
+                            </resource>
+                        </webResources>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>oph-sade-artifactory</id>
+            <name>oph-sade-artifactory-releases</name>
+            <url>https://artifactory.opintopolku.fi/artifactory/oph-sade-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>oph-sade-artifactory</id>
+            <name>oph-sade-artifactory-snapshots</name>
+            <url>https://artifactory.opintopolku.fi/artifactory/oph-sade-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>oph-sade-artifactory-snapshots</id>
+            <url>https://artifactory.opintopolku.fi/artifactory/oph-sade-snapshot-local</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>oph-sade-artifactory-releases</id>
+            <url>https://artifactory.opintopolku.fi/artifactory/oph-sade-release-local</url>
+        </repository>
+        <repository>
+            <id>libs-3rd-party</id>
+            <name>libs-3rd-party</name>
+            <url>https://artifactory.opintopolku.fi/artifactory/libs-3rd-party</url>
+        </repository>
+    </repositories>
 
 </project>
