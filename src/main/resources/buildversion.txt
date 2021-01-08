@@ -1,0 +1,6 @@
+artifactId=${project.artifactId}
+version=${project.version}
+buildNumber=${buildNumber}
+branchName=${branch}
+vcsRevision=${revision}
+buildTtime=${timestamp}
