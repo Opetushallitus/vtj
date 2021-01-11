@@ -96,6 +96,7 @@ public class VtjServiceImpl implements VtjService {
         
         YksiloityHenkilo henkilo = new YksiloityHenkilo();
         Henkilo vtjHenkilo = vastaus.getHenkilo();
+        assert(vtjHenkilo != null);
 
         henkilo.setEtunimi(vtjHenkilo.getNykyisetEtunimet().getEtunimet());
         henkilo.setSukunimi(vtjHenkilo.getNykyinenSukunimi().getSukunimi());

@@ -8,9 +8,7 @@ import fi.vm.sade.rajapinnat.vtj.PassivoituException;
 import fi.vm.sade.rajapinnat.vtj.VtjOperation;
 import fi.vm.sade.rajapinnat.vtj.api.YksiloityHenkilo;
 import fi.vm.sade.rajapinnat.vtj.service.VtjService;
-import fi.vm.sade.rajapinnat.vtj.service.VtjTestData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,15 +34,9 @@ public class VtjResource {
 
     @Autowired
     private VtjService vtjService;
-    
-    @Autowired
-    private VtjTestData vtjTestData;
 
     @Autowired
     private AuditLogger auditLogger;
-    
-    @Value("${vtj.production.env}")
-    private boolean productionEnv;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,13 +47,8 @@ public class VtjResource {
                                      @QueryParam("log") Boolean logMessage) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            YksiloityHenkilo yksiloityHenkilo = null;
-            if (productionEnv) {
-                yksiloityHenkilo = vtjService.teeHenkiloKysely(authentication.getName(), hetu, (logMessage != null ? logMessage : false));
-            }
-            else {
-                yksiloityHenkilo = vtjTestData.teeHakuTestidatasta(hetu);
-            }
+            YksiloityHenkilo yksiloityHenkilo = vtjService.teeHenkiloKysely(
+                    authentication.getName(), hetu, (logMessage != null ? logMessage : false));
 
             Target target = new Target.Builder().setField("hetu", hetu).build();
             Changes changes = new Changes.Builder().build();

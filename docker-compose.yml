@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  vtj-service:
+    build: ./vtj-service
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dev_keys:/root/oph-configuration/keys:ro
+  vtj-test-ws:
+    build: ./vtj-test-ws
+

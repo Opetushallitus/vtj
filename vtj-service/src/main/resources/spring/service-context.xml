@@ -39,9 +39,6 @@
         <property name="salasana" value="${vtj.password}" />
         <property name="soSoSoap" ref="soSoSoap" />
     </bean>
-    
-    <bean id="vtjTestData" class="fi.vm.sade.rajapinnat.vtj.service.impl.VtjTestDataImpl">
-    </bean>
 
     <bean id="auditLogger" class="fi.vm.sade.rajapinnat.vtj.AuditLogger" />
 
