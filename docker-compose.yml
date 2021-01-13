@@ -8,4 +8,5 @@ services:
       - ./dev_keys:/root/oph-configuration/keys:ro
   vtj-test-ws:
     build: ./vtj-test-ws
-
+    volumes:
+      - ./dev_keys:/home/vtj/keys:ro

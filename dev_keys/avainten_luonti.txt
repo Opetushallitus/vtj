@@ -1,9 +1,13 @@
-# luodaat truststore ja CA-avain
-keytool -genkeypair -alias dev_ca -keyalg RSA -keystore truststore.p12 -dname "CN=Dev CA" -storepass password -keypass password -ext bc=ca:true -validity 3650
-# exportataan CA-avain
-keytool -export -alias dev_ca -file ca.cer -keystore truststore.p12 -storepass password
+# luodaan self-signed CA-avain
+keytool -genkeypair -alias dev_ca -keyalg RSA -keystore dev_ca.p12 -dname "CN=Dev CA" -storepass password -keypass password -ext bc=ca:true -validity 3650
 
-# luodaan keystore ja avaimet palveluille
+# exportataan CA-avain
+keytool -export -alias dev_ca -file ca.cer -keystore dev_ca.p12 -storepass password
+
+# importataan CA-avain keystoreen
+keytool -importcert -trustcacerts -alias dev_ca -file ca.cer -keypass password -keystore keystore.p12 -storepass password
+
+# luodaan avaimet palveluille
 keytool -genkeypair -alias vtj-service -keyalg RSA -keystore keystore.p12 -dname "CN=vtj-service" -storepass password -keypass password -validity 3650
 keytool -genkeypair -alias vtj-test-ws -keyalg RSA -keystore keystore.p12 -dname "CN=vtj-test-ws" -storepass password -keypass password -validity 3650
 
@@ -12,12 +16,14 @@ keytool -certreq -keystore keystore.p12 -storepass password -alias vtj-service -
 keytool -certreq -keystore keystore.p12 -storepass password -alias vtj-test-ws -file vtj-test-ws.csr
 
 # allekirjoitetaan CA-avaimella
-keytool -gencert -keystore truststore.p12 -storepass password -alias dev_ca -infile vtj-service.csr -outfile vtj-service.der -validity 3650
-keytool -gencert -keystore truststore.p12 -storepass password -alias dev_ca -infile vtj-test-ws.csr -outfile vtj-test-ws.der -validity 3650
-
-# importataan CA-avain keystoreen
-keytool -importcert -trustcacerts -alias dev_ca -file ca.cer -keypass password -keystore keystore.p12 -storepass password
+keytool -gencert -keystore dev_ca.p12 -storepass password -alias dev_ca -infile vtj-service.csr -outfile vtj-service.der -validity 3650
+keytool -gencert -keystore dev_ca.p12 -storepass password -alias dev_ca -infile vtj-test-ws.csr -outfile vtj-test-ws.der -validity 3650
 
 # importataan allekirjoitetut sertit keystoreen
 keytool -importcert -alias vtj-service -file vtj-service.der -keypass password -keystore keystore.p12 -storepass password
 keytool -importcert -alias vtj-test-ws -file vtj-test-ws.der -keypass password -keystore keystore.p12 -storepass password
+
+# luodaan truststore ja importataan CA-avain
+keytool -importcert -trustcacerts -alias dev_ca -file ca.cer -keypass password -keystore truststore.p12 -storepass password
+
+# muut, kuin truststore- ja keystore-tiedosto voidaan lopuksi tuhota
