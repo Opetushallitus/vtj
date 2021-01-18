@@ -1,0 +1,49 @@
+sudo: required
+language: java
+jdk:
+  - openjdk11
+services:
+  - docker
+cache:
+  directories:
+    - $HOME/.m2
+env:
+  global:
+    # ARTIFACTORY_USERNAME
+    - secure: "QcX6pLw5TGSvNnFvkXC7/w6CisRg5l/+/RDBgrLwUQ6Ylf7nuIP5nUvis/W7KiKYPyCAuGLRX+EJwxZrAE4hjxFTmRTD9MJ1Tda/J+OcIWzyRgL1RhxR0j9m3WQfAos3rS6SjuAmnB/lJoSpKJt66xyXEAohkU1lXI+a+kKOrs6OS3ya0SZa38I4A17GcZa47eSnbQC3UDm3syfnGwKQC/PiGiSSqz3lNmUpnmCxd1PiffBx7ItvmkqDr/ocKwEOYYwTyXM6/c/wPw2KZJFjzX8H+0NrAPwKL9XPhMVik+yZCDMQBK9w2OYw6+qnDyECsjaBQtLV9lywmvd9vdV2aqGQoGV87wXVHfnp5aGtTH7oMQs32VNUQdfy+zMTWgOkRlI1bpLIdBdRGz9fiT4o8rvPYf6v9NfBhcLZ2881fELRSnrxBRThB3zjszPK2AI7yn9xV0/KRwL5RR6nMdr57ZMy4cS790kAv/h/ph45vyMt+gRTHiLjl/HpxDBwToyjVz34zq9LKe0okesc5iBPrcRg/cVfTI1r8vsrzcSlHBBlEZrKul1XQAa/3TqY0RRIQmiaJWzgLPGFGjiXdQqSjiN3Af3UqMc//5IwPmRZp73uI+mjIi3dG7qj9vdZL9TyMOUTyFeZ8QTCK1T7gvaDEv1SlC6Y2nUYATDJRoPYeXU="
+    # ARTIFACTORY_PASSWORD
+    - secure: "6PGqn3KliQr9li5F/PZFhShNFO1HWSULGACkYSdOQcgmnqARd7COR/xKC9IOTi+N3bycvGtke1EJOaBPkEJwk+ehmeQV9khwI/rPC7v0hGcG4UxzGh4gg5EXEZurp55r5Wi9G8EZ0JVg/LT9wWUAuiFy3xzwAAsztBH5MDeuJrkVp3ghW8NSVCkiXy/7QEkYA6oTAzNeVeO6Sn0O/51F89/drX5ELWQSWjDjXoBinOKFw+cz8ptJV7kP+zb6Hgyzk8GjE1FnNJi8Zl9aaonnKXXoWsONhKeKEpt4Jt1J5WBXZXoKtEXCW7p7fzCClKVzRoPIF51+Yr9F+IO4pl4mqbtQGzkgA9Pcqw6WD0UXyjq73FLpycriYUfKotJGF3DEXRvqF1vPFDZZKpr5wuBrba8g/JOa9eHULayHV40w3XQwwSKveB1gZk7UIjOfQXSBx0Lo2Wgoc1a2ze8FFU4peOZAkfeMD++gM2y1/+FjgYyWW6fzze9AxnCwPOOHfCrqQbA8p9Y96uynKfwgE+IZshB0kVHzNGEXG0xUstfg2nE5e6j47cPf40leYY9A9HgreP+8KSmEIlUN9UpBGQ2lc2rD01fd75ZRWm6683np4WGYsU/jSj2FdjIXsYByMsTN/H+w7BmMx+xruibfkCGa41bepyA6s3UnTm5bt6YBSXs="
+    # AWS_ACCESS_KEY_ID
+    - secure: "FQiOntadU0SSUzK5aCfqfWBJge1izblKrDUJ3Mx7dCAisgVgec3hPoq9hRJaYmAc+WBQmdZW7BZ4l4OkGyY93tlTDjW00cCxUWmZ9FGYZEWYgSDDFmeJf7ifow4gCAtM12oT78+DPYTtSvwjTkhkZlnHr7zL+uKYxabn6EF3oV+KfKb3YIkVjf7nT33mqSim+QPTJFRQI1CKkcePjvhctZ0vjwapbliY9ujFammtpObFVm3gtUEDDLV0v+gvvWx71Dwjojr6iBBYsodqViy70a0pcQg0nraK2CRP7ZpuZBXO/5bBq0oQd5TzYQaDMmEntM+dWry13oz07jvdd9pWd/BCs+X4rTFW2nWE2EmJahejHa+TGlSyyyKvyjcu0Ej20if69tP1qcSmyNRpygCVwbDIIb69W2EgaBDAKSLmt71JwMuIHQCrWD2vqh854e+KlGxcse0wQE3wb8s29aA7lEnKMu5gB5Q9H8CaiFM+S8dZrZxlhyEi16iFjHLKgzup5lP8O5trL1m//NWguCx1gTGhu6JtdIb+n7S1zLq7MTbClgh23ThvgyCuccdPh3KRMjSMYQNIL53SkWRxcUEikROmnSbcB1PvuqSP12NXNN5mNH2GQYeAzn81fDM9VtQps8GhzTS1h59wkKGM0TM7Q2XKCJt6V7aImw0klL8CFU8="
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "ZVCrKEArpdoIZu4R9iuN9GW7gfota7BDOlXiszFCSZvNmp9wY96/WVGfK1BlKSCUj1m0tT597c9aaDxNeHPx6vjgFR6X059UlcenpnMrRBOtN2Un5tvZPk8B02QyUf//nuCFjHU/wpIENdVmlrLukFbwcda13R7wR7RUXifOaGn4mOKfmKFB8iRdZadVgYZVM9sHmR3E3MfOE/ElT00+gSm44NNBr5pcOZL4s1eVn9oMUH2BbAEYJh6tfQ9Pvf0Yenc1MlpFIsPmnCHduwv4r341nN1b/jy+7TbU0csdBjNbhw686wrg1WgNlUDt/NekQb98dD8UvHpq6inKWHGVoiClhww8YIRtJYzGqdyBNDdk0WuMMkzje/wdUKE3IV0WFeCuHiQkm67mMtCON1q6fjIsbTq1BaoQePBZvboe686NLVcd9RtpT4k1nSOxiaWsBFXjGN4Cv3CLHZfqGP5VmfqvepcA493kryBadIdmxCNoNLjuvfv+Y+23z5xL3Y+FF8WOssNvjAVc0eIteM8ZU9q03c/yP+5PlcYPTHQcFPnqnjseQgqsNMmTZgPM9lKmY6VBG8K/k03mE3bDdtIIXqstFV2oovHppCrLP+LA43QcIXelMkdIQYn0+bNipD/ns+RE43FYENt0TNHBjqWXfd+7CzG+KHwzW9q9d3QBQGM="
+
+install:
+  - git clone https://github.com/Opetushallitus/ci-tools.git
+  - source ci-tools/common/setup-tools.sh
+  - export ARTIFACT_NAME="vtj-service"
+
+script:
+  - mvn clean install -B -Dbranch=${TRAVIS_BRANCH} -Drevision=${TRAVIS_COMMIT} -DbuildNumber=${TRAVIS_BUILD_NUMBER}
+
+  - mv vtj-service/target/vtj-service.war $DOCKER_BUILD_DIR/artifact/vtj-service.war
+  - cp -vr src/main/resources/oph-configuration $DOCKER_BUILD_DIR/config/
+
+  - export BASE_IMAGE="baseimage-war-openjdk11:master"
+  - ./ci-tools/common/pull-image.sh
+  - ./ci-tools/build/build-war.sh $ARTIFACT_NAME
+
+  - export BASE_IMAGE="baseimage-fatjar-openjdk11:master"
+  - ./ci-tools/common/pull-image.sh
+  - ./ci-tools/build/build-fatjar.sh vtj-test-ws
+
+deploy:
+  - provider: script
+    script: mvn deploy -pl vtj-api -am -DskipTests --settings ci-tools/common/maven-settings.xml
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: script
+    script: ./ci-tools/build/upload-image.sh $ARTIFACT_NAME && ./ci-tools/build/upload-image.sh vtj-test-ws
+    on:
+      all_branches: true
