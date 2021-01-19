@@ -7,7 +7,7 @@ server:
     key-store-password: "${vtj-test-ws.key-store-password:password}"
     key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
     key-password: "${vtj-test-ws.key-password:password}"
-    client-auth: need
+    client-auth: want
 management:
   endpoints:
     enabled-by-default: false

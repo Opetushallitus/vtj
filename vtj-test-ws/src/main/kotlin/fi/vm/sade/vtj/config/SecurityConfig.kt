@@ -19,7 +19,7 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
             .and()
             .authorizeRequests().anyRequest().authenticated()
             .and()
