@@ -1,0 +1,16 @@
+server:
+  ssl:
+    enabled: true
+    trust-store: "${vtj-test-ws.trust-store:/home/vtj/keys/truststore.p12}"
+    trust-store-password: "${vtj-test-ws.trust-store-password:password}"
+    key-store: "${vtj-test-ws.key-store:/home/vtj/keys/keystore.p12}"
+    key-store-password: "${vtj-test-ws.key-store-password:password}"
+    key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
+    key-password: "${vtj-test-ws.key-password:password}"
+    client-auth: need
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true

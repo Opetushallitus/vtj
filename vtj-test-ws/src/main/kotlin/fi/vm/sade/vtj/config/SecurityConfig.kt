@@ -1,6 +1,7 @@
 package fi.vm.sade.vtj.config
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -18,11 +19,14 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.authorizeRequests().anyRequest().authenticated()
-                .and()
-                .x509()
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+            .and()
+            .authorizeRequests().anyRequest().authenticated()
+            .and()
+            .x509()
                 .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
                 .userDetailsService(userDetailsService())
+
     }
 
     override fun userDetailsService(): UserDetailsService {

@@ -20,7 +20,7 @@ class WebServiceConfig: WsConfigurerAdapter() {
         val servlet = MessageDispatcherServlet()
         servlet.setApplicationContext(applicationContext)
         servlet.isTransformWsdlLocations = true
-        return ServletRegistrationBean(servlet, "/*")
+        return ServletRegistrationBean(servlet, "/ws/*")
     }
 
     @Bean(name = ["vtj"])
