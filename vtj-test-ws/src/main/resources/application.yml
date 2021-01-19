@@ -8,9 +8,12 @@ server:
     key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
     key-password: "${vtj-test-ws.key-password:password}"
     client-auth: want
+    # TLSv1.3 ei tue optionaalista client-sertiä ("want" yllä)
+    enabled-protocols: [TLSv1.2]
 management:
   endpoints:
     enabled-by-default: false
   endpoint:
     health:
       enabled: true
+#logging.level.org.springframework.security: DEBUG
