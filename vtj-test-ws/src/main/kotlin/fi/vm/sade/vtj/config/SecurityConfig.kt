@@ -1,9 +1,11 @@
 package fi.vm.sade.vtj.config
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -18,11 +20,18 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.authorizeRequests().anyRequest().authenticated()
-                .and()
+        http
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
+            .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                .anyRequest().authenticated()
+            .and()
                 .x509()
-                .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
-                .userDetailsService(userDetailsService())
+                    .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
+                    .userDetailsService(userDetailsService())
+
     }
 
     override fun userDetailsService(): UserDetailsService {
