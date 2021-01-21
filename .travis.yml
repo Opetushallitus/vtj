@@ -26,7 +26,8 @@ install:
 script:
   - mvn clean install -B -Dbranch=${TRAVIS_BRANCH} -Drevision=${TRAVIS_COMMIT} -DbuildNumber=${TRAVIS_BUILD_NUMBER}
 
-  - mv vtj-service/target/vtj-service.war $DOCKER_BUILD_DIR/artifact/vtj-service.war
+  - mv vtj-service/target/vtj-service.war $DOCKER_BUILD_DIR/artifact/
+  - mv vtj-test-ws/target/vtj-test-ws.jar $DOCKER_BUILD_DIR/artifact/
   - cp -vr src/main/resources/oph-configuration $DOCKER_BUILD_DIR/config/
 
   - export BASE_IMAGE="baseimage-war-openjdk11:master"
