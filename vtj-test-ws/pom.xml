@@ -102,6 +102,7 @@
 					<mainClass>fi.vm.sade.vtj.VtjWebServiceApplicationKt</mainClass>
 					<!-- spring-boot:run system properties -->
 					<systemPropertyVariables>
+						<vtj-test-ws.log-file>./oph-vtjtestws.log</vtj-test-ws.log-file>
 						<vtj-test-ws.trust-store>../dev_keys/truststore.p12</vtj-test-ws.trust-store>
 						<vtj-test-ws.key-store>../dev_keys/keystore.p12</vtj-test-ws.key-store>
 					</systemPropertyVariables>
