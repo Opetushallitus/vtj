@@ -1,4 +1,4 @@
-oph-vtjtestws.log
+oph-vtjtestws.log*
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
