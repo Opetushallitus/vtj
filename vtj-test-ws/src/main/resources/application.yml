@@ -10,6 +10,8 @@ server:
     client-auth: want
     # TLSv1.3 ei tue optionaalista client-sertiä ("want" yllä)
     enabled-protocols: [TLSv1.2]
+  servlet:
+    context-path: "/vtj-test-ws"
   tomcat:
     accesslog:
             enabled: true
