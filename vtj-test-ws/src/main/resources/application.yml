@@ -16,8 +16,8 @@ management:
   endpoint:
     health:
       enabled: true
-#logging.level.org.springframework.security: DEBUG
 logging:
   file:
     name: "${vtj-test-ws.log-file:${user.home}/logs/oph-vtjtestws.log}"
 logging.level.root: "${env_loglevel:INFO}"
+logging.level.org.springframework.security: DEBUG
