@@ -8,5 +8,8 @@ services:
       - ./dev_keys:/root/oph-environment/authentication/vtj-service:ro
   vtj-test-ws:
     build: ./vtj-test-ws
+    environment:
+      - vtj-test-ws.ssl-enabled=true
+      - vtj-test-ws.client-auth=want
     volumes:
       - ./dev_keys:/root/oph-environment/authentication/vtj-service:ro

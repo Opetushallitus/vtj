@@ -1,14 +1,14 @@
 server:
   ssl:
-    enabled: true
+    enabled: ${vtj-test-ws.ssl-enabled:false}
     trust-store: "${vtj-test-ws.trust-store:/root/oph-environment/authentication/vtj-service/truststore.p12}"
     trust-store-password: "${ssm_vtj_truststore_password:password}"
     key-store: "${vtj-test-ws.key-store:/root/oph-environment/authentication/vtj-service/keystore.p12}"
     key-store-password: "${ssm_vtj_keystore_password:password}"
     key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
     key-password: "${ssm_vtj_keystore_password:password}"
-    client-auth: want
-    # TLSv1.3 ei tue optionaalista client-sertiä ("want" yllä)
+    client-auth: ${vtj-test-ws.client-auth:none}
+    # TLSv1.3 ei tue optionaalista client-sertiä ("want")
     enabled-protocols: [TLSv1.2]
   servlet:
     context-path: "/vtj-test-ws"
