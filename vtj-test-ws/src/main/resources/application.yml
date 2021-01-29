@@ -33,9 +33,4 @@ management:
   endpoint:
     health:
       enabled: true
-# lokikonfiguraatio tiedostossa logback-spring.xml
 logging.level.root: "${env_loglevel:INFO}"
-auditlog:
-  file:
-    name: "${vtj-test-ws.audit-log-file:${user.home}/logs/auditlog_vtj-test-ws.log}"
-    pattern: "${vtj-test-ws.audit-log-file-pattern:${user.home}/logs/auditlog_vtj-test-ws.%i.log}"
