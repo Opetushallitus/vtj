@@ -5,8 +5,11 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./dev_keys:/root/oph-configuration/keys:ro
+      - ./dev_keys:/root/oph-environment/authentication/vtj-service:ro
   vtj-test-ws:
     build: ./vtj-test-ws
+    environment:
+      - vtj-test-ws.ssl-enabled=true
+      - vtj-test-ws.client-auth=want
     volumes:
-      - ./dev_keys:/home/vtj/keys:ro
+      - ./dev_keys:/root/oph-environment/authentication/vtj-service:ro

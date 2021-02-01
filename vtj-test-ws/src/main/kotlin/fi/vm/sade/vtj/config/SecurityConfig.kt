@@ -1,6 +1,8 @@
 package fi.vm.sade.vtj.config
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -18,20 +20,31 @@ import kotlin.jvm.Throws
 @EnableWebSecurity
 class SecurityConfig: WebSecurityConfigurerAdapter() {
 
+    @Autowired
+    private lateinit var environment: Environment
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http
+        val configurer = http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
-            .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
-                .anyRequest().authenticated()
-            .and()
-                .x509()
+
+        val sslEnabled = environment.getRequiredProperty("server.ssl.enabled", Boolean::class.java)
+        if (sslEnabled) {
+            configurer
+                .and()
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                    .anyRequest().authenticated()
+                .and()
+                    .x509()
                     .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
                     .userDetailsService(userDetailsService())
-
+        } else {
+            configurer
+                .and()
+                    .authorizeRequests().anyRequest().permitAll()
+        }
     }
 
     override fun userDetailsService(): UserDetailsService {

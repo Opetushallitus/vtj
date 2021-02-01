@@ -9,7 +9,7 @@
     <context:annotation-config/>
 
     <context:property-placeholder
-            location="classpath:vtj-service.properties, classpath:rajapinnat-oph.properties, file:///${user.home:''}/oph-configuration/common.properties, file:///${user.home:''}/oph-configuration/vtj-service.properties, file:///${user.home:''}/oph-configuration/override.properties"
+            location="classpath:vtj-service.properties, file:///${user.home:''}/oph-configuration/common.properties, file:///${user.home:''}/oph-configuration/vtj-service.properties, file:///${user.home:''}/oph-configuration/override.properties"
             ignore-resource-not-found="true" properties-ref="defaultProps" />
 
     <bean id="defaultProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">

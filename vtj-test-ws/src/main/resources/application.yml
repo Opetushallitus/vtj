@@ -1,19 +1,36 @@
 server:
   ssl:
-    enabled: true
-    trust-store: "${vtj-test-ws.trust-store:/home/vtj/keys/truststore.p12}"
-    trust-store-password: "${vtj-test-ws.trust-store-password:password}"
-    key-store: "${vtj-test-ws.key-store:/home/vtj/keys/keystore.p12}"
-    key-store-password: "${vtj-test-ws.key-store-password:password}"
+    enabled: ${vtj-test-ws.ssl-enabled:false}
+    trust-store: "${vtj-test-ws.trust-store:/root/oph-environment/authentication/vtj-service/truststore.p12}"
+    trust-store-password: "${ssm_vtj_truststore_password:password}"
+    key-store: "${vtj-test-ws.key-store:/root/oph-environment/authentication/vtj-service/keystore.p12}"
+    key-store-password: "${ssm_vtj_keystore_password:password}"
     key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
-    key-password: "${vtj-test-ws.key-password:password}"
-    client-auth: want
-    # TLSv1.3 ei tue optionaalista client-sertiä ("want" yllä)
+    key-password: "${ssm_vtj_keystore_password:password}"
+    client-auth: ${vtj-test-ws.client-auth:none}
+    # TLSv1.3 ei tue optionaalista client-sertiä ("want")
     enabled-protocols: [TLSv1.2]
+  servlet:
+    context-path: "/vtj-test-ws"
+  tomcat:
+    accesslog:
+            enabled: true
+            directory: "${vtj-test-ws.access-log-dir:${user.home}/logs}"
+            prefix: "access_vtj-test-ws"
+            suffix: ".log"
+            pattern: "{\"timestamp\": \"%{yyyy-MM-dd'T'HH:mm:ss.SSSZ}t\", \"responseCode\": \"%s\", \"request\": \"%r\", \"responseTime\": \"%D\", \"requestMethod\": \"%m\", \"service\": \"vtj-test-ws\", \"environment\": \"${env.name}\", \"customer\": \"OPH\", \"user-agent\": \"%{User-Agent}i\", \"x-forwarded-for\": \"%{X-Forwarded-For}i\", \"x-real-ip\": \"%{X-Real-IP}i\", \"remote-ip\": \"%a\",  \"response-size\": \"%B\", \"referer\": \"%{Referer}i\"}"
+            request-attributes-enabled: true
+            rotate: true
+            rename-on-rotate: true
+            max-days: 7
+    remote:
+      port-header: X-Real-Port
+    remoteip:
+      protocol-header: X-Real-Proto
 management:
   endpoints:
     enabled-by-default: false
   endpoint:
     health:
       enabled: true
-#logging.level.org.springframework.security: DEBUG
+logging.level.root: "${env_loglevel:INFO}"

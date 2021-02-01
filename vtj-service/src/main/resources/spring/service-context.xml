@@ -20,7 +20,7 @@
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
 
-    <http:conduit name="*.http-conduit">
+    <http:conduit name="https://.*">
         <http:tlsClientParameters>
             <sec:keyManagers keyPassword="${vtj.keystore.password}">
                 <sec:keyStore file="${vtj.keystore.file}" type="jks" password="${vtj.keystore.password}"  />
