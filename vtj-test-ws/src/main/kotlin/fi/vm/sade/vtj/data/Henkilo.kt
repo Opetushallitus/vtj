@@ -96,6 +96,12 @@ class HenkiloHelper {
 
         private val yksilonumeroPattern = java.util.regex.Pattern.compile(".{7}(\\d{3}).")
 
+        fun dummyHenkilo(): Henkilo {
+                return Henkilo(-1L, "", false, null, "", "",
+                        "", "", null, null, null,
+                        null, null, "", emptySet(), emptySet())
+        }
+
         fun muunnaHenkilo(henkilo: Henkilo): VTJHenkiloVastaussanoma.Henkilo {
                 val muunnettu = henkilo()
                 muunnettu.nykyinenKutsumanimi.kutsumanimi = henkilo.etunimet.substringBefore(" ")

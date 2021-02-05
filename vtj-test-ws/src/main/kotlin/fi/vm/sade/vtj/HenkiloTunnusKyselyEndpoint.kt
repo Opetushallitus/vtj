@@ -1,6 +1,5 @@
 package fi.vm.sade.vtj
 
-import fi.vm.sade.vtj.data.Henkilo
 import fi.vm.sade.vtj.data.HenkiloHelper
 import fi.vm.sade.vtj.service.HenkiloService
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma
