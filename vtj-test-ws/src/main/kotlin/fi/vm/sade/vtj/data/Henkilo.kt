@@ -70,7 +70,12 @@ class KotimainenOsoite(
         @Size(min = 5, max = 5) var postinumero: String,
         @Size(min = 1, max = 100) var postitoimipaikka_fi: String?,
         @Size(min = 1, max = 100) var postitoimipaikka_sv: String?
-)
+) {
+        constructor()  : this(
+                -1L, null, null, -1, null, null, null, "", "", ""
+        )
+
+}
 
 @Entity
 @Table(name = "ulkomainen_osoite")
@@ -81,9 +86,15 @@ data class UlkomainenOsoite(
         @Size(min = 1, max = 100) var paikkakunta: String,
         @Size(min = 1, max = 100) var valtio_fi: String?,
         @Size(min = 1, max = 100) var valtio_sv: String?
-)
+) {
+        constructor() : this(
+                -1L, "", "", null, null
+        )
+}
 
 class HenkiloHelper {
+
+        private val yksilonumeroPattern = java.util.regex.Pattern.compile(".{7}(\\d{3}).")
 
         fun muunnaHenkilo(henkilo: Henkilo): VTJHenkiloVastaussanoma.Henkilo {
                 val muunnettu = henkilo()
@@ -138,6 +149,14 @@ class HenkiloHelper {
                 return muunnettu
         }
 
+        fun sukupuoli(hetu: String): Sukupuoli {
+                return if (yksilonumeroPattern.matcher(hetu).group(1).toInt() % 2 == 0) {
+                        Sukupuoli.NAINEN
+                } else {
+                        Sukupuoli.MIES
+                }
+        }
+
         // alustaa kenttiä ei-nulleiksi; ihanaa generoitua koodia!
         private fun henkilo(): VTJHenkiloVastaussanoma.Henkilo {
                 val henkilo = VTJHenkiloVastaussanoma.Henkilo()
@@ -152,3 +171,4 @@ class HenkiloHelper {
                 return henkilo
         }
 }
+

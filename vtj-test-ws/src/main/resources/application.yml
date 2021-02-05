@@ -34,3 +34,8 @@ management:
     health:
       enabled: true
 logging.level.root: "${env_loglevel:INFO}"
+vtj-test-ws:
+  datastore:
+    oppijanumerorekisteri:
+      enabled: ${vtj-test-ws.datastore.oppijanumerorekisteri-enabled:false}
+      host: "${vtj-test-ws.datastore.oppijanumerorekisteri-host:${host_alb:'http://oppijanumerorekisteri'}}"
