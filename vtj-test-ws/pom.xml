@@ -13,11 +13,10 @@
 	<description>VTJ:n web serviceä jäljittelevä testipalvelu</description>
 
 	<properties>
-		<auditlogger.version>9.0.0-SNAPSHOT</auditlogger.version>
 		<java.version>11</java.version>
 		<kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
 		<kotlin.version>1.4.10</kotlin.version>
-		<oph-httpclient.version>0.3.0-SNAPSHOT</oph-httpclient.version>
+		<oph-javautils.version>0.5.0-SNAPSHOT</oph-javautils.version>
 		<oppijanumerorekisteri-api.version>0.5.0-SNAPSHOT</oppijanumerorekisteri-api.version>
 		<spring.boot.version>2.4.0</spring.boot.version>
 	</properties>
@@ -41,19 +40,14 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>fi.vm.sade</groupId>
-			<artifactId>auditlogger</artifactId>
-			<version>${auditlogger.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>fi.vm.sade.oppijanumerorekisteri</groupId>
 			<artifactId>oppijanumerorekisteri-api</artifactId>
 			<version>${oppijanumerorekisteri-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fi.vm.sade.java-utils</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>${oph-httpclient.version}</version>
+			<artifactId>java-http</artifactId>
+			<version>${oph-javautils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,6 +80,10 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
 		<dependency>

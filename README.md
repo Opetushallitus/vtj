@@ -24,3 +24,13 @@ Pelkkää `vtj-test-ws`:ää voi ajaa Mavenilla sen omasta hakemistolla: `mvn sp
 
 Tuotannossa VTJ:n web service vaatii SSL-salauksen, sekä sertifikaattiautentikaation. Lokaalisti ajaessa ne ovat
 oletusarvoisesti käytössä, mutta testiympäristöissä eivät. Ks. `docker-compose.yml` ja `vtj-test-ws/pom.xml`.
+
+
+## Oppijanumerorekisteri-integraatio
+
+Web servicen voi asettaa "ONR-läpilukutilaan", jolloin se etsii oman tietokantansa lisäksi henkilöitä oppijanumerorekisteristä. Ks. `.env` ja `HenkiloService`.
+
+
+## Debuggaaminen
+
+Kontissa ajaessa debuggaus vaatii `JAVA_TOOL_OPTIONS` -ympäristömuuttujan asettamista, sekä siinä määritellyn portin avaamista. Ks. `docker-compose.yml`.

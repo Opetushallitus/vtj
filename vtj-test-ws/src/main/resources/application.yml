@@ -39,3 +39,5 @@ vtj-test-ws:
     oppijanumerorekisteri:
       enabled: ${vtj-test-ws.datastore.oppijanumerorekisteri-enabled:false}
       host: "${vtj-test-ws.datastore.oppijanumerorekisteri-host:${host_alb:'http://oppijanumerorekisteri'}}"
+      username: "${vtj-test-ws.datastore.oppijanumerorekisteri-username:${ssm_vtj_test_ws_onr_username:'not_used'}}"
+      password: "${vtj-test-ws.datastore.oppijanumerorekisteri-password:${ssm_vtj_test_ws_onr_password:'not_used'}}"

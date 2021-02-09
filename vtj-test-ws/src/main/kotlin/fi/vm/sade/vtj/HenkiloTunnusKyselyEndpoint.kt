@@ -3,6 +3,7 @@ package fi.vm.sade.vtj
 import fi.vm.sade.vtj.data.HenkiloHelper
 import fi.vm.sade.vtj.service.HenkiloService
 import fi.vrk.xml.schema.vtjkysely.VTJHenkiloVastaussanoma
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
 import org.springframework.ws.server.endpoint.annotation.Endpoint
@@ -21,6 +22,7 @@ class HenkiloTunnusKyselyEndpoint(
         @Autowired val marshaller: Jaxb2Marshaller,
         @Autowired val henkiloService: HenkiloService) {
 
+    private val logger = LoggerFactory.getLogger(HenkiloTunnusKyselyEndpoint::class.java)
     private val helper = HenkiloHelper()
 
     @PayloadRoot(namespace = NAMESPACE, localPart = "TeeHenkilonTunnusKysely")
@@ -42,8 +44,10 @@ class HenkiloTunnusKyselyEndpoint(
         if (henkilo != null) {
             vastaussanoma.henkilo = helper.muunnaHenkilo(henkilo)
             vastaussanoma.paluukoodi.koodi = HAKU_ONNISTUI
+            logger.info("Haku onnistui")
         } else {
             vastaussanoma.paluukoodi.koodi = HAKUPERUSTEELLA_EI_LOYDY
+            logger.info("Henkilöä ei löytynyt")
         }
         return vastaussanoma
     }

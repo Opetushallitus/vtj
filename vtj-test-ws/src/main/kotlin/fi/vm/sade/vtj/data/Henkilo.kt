@@ -94,7 +94,7 @@ data class UlkomainenOsoite(
 
 class HenkiloHelper {
 
-        private val yksilonumeroPattern = java.util.regex.Pattern.compile(".{7}(\\d{3}).")
+        private val yksilonumeroPattern = java.util.regex.Pattern.compile(".{7}(\\d{3})\\w")
 
         fun dummyHenkilo(): Henkilo {
                 return Henkilo(-1L, "", false, null, "", "",
@@ -156,11 +156,11 @@ class HenkiloHelper {
         }
 
         fun sukupuoli(hetu: String): Sukupuoli {
-                return if (yksilonumeroPattern.matcher(hetu).group(1).toInt() % 2 == 0) {
-                        Sukupuoli.NAINEN
-                } else {
-                        Sukupuoli.MIES
+                val matcher = yksilonumeroPattern.matcher(hetu)
+                if (matcher.matches()) {
+                        return if (matcher.group(1).toInt() % 2 == 0) Sukupuoli.NAINEN else Sukupuoli.MIES
                 }
+                throw IllegalArgumentException("Epävalidi hetu: $hetu")
         }
 
         // alustaa kenttiä ei-nulleiksi; ihanaa generoitua koodia!
