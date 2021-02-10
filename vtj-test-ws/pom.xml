@@ -123,12 +123,11 @@
 					<mainClass>fi.vm.sade.vtj.VtjWebServiceApplicationKt</mainClass>
 					<!-- spring-boot:run system properties -->
 					<systemPropertyVariables>
-						<vtj-test-ws.access-log-dir>${basedir}/logs</vtj-test-ws.access-log-dir>
-						<vtj-test-ws.audit-log-file>${basedir}/logs/auditlog_vtj-test-ws.log</vtj-test-ws.audit-log-file>
-						<vtj-test-ws.ssl-enabled>true</vtj-test-ws.ssl-enabled>
-						<vtj-test-ws.client-auth>want</vtj-test-ws.client-auth>
-						<vtj-test-ws.trust-store>../dev_keys/truststore.p12</vtj-test-ws.trust-store>
-						<vtj-test-ws.key-store>../dev_keys/keystore.p12</vtj-test-ws.key-store>
+						<vtj_testws_access_log_dir>${basedir}/logs</vtj_testws_access_log_dir>
+						<vtj_testws_ssl_enabled>true</vtj_testws_ssl_enabled>
+						<vtj_testws_client_auth>want</vtj_testws_client_auth>
+						<vtj_testws_truststore>../dev_keys/truststore.p12</vtj_testws_truststore>
+						<vtj_testws_keystore>../dev_keys/keystore.p12</vtj_testws_keystore>
 					</systemPropertyVariables>
 				</configuration>
 				<executions>

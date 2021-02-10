@@ -1,13 +1,13 @@
 server:
   ssl:
-    enabled: ${vtj-test-ws.ssl-enabled:false}
-    trust-store: "${vtj-test-ws.trust-store:/root/oph-environment/authentication/vtj-service/truststore.p12}"
+    enabled: ${vtj_testws_ssl_enabled:false}
+    trust-store: "${vtj_testws_truststore:/root/oph-environment/authentication/vtj-service/truststore.p12}"
     trust-store-password: "${ssm_vtj_truststore_password:password}"
-    key-store: "${vtj-test-ws.key-store:/root/oph-environment/authentication/vtj-service/keystore.p12}"
+    key-store: "${vtj_testws_keystore:/root/oph-environment/authentication/vtj-service/keystore.p12}"
     key-store-password: "${ssm_vtj_keystore_password:password}"
-    key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
+    key-alias: "${vtj_testws_key_alias:vtj-test-ws}"
     key-password: "${ssm_vtj_keystore_password:password}"
-    client-auth: ${vtj-test-ws.client-auth:none}
+    client-auth: ${vtj_testws_client_auth:none}
     # TLSv1.3 ei tue optionaalista client-sertiä ("want")
     enabled-protocols: [TLSv1.2]
   servlet:
@@ -15,7 +15,7 @@ server:
   tomcat:
     accesslog:
             enabled: true
-            directory: "${vtj-test-ws.access-log-dir:${user.home}/logs}"
+            directory: "${vtj_testws_access_log_dir:${user.home}/logs}"
             prefix: "access_vtj-test-ws"
             suffix: ".log"
             pattern: "{\"timestamp\": \"%{yyyy-MM-dd'T'HH:mm:ss.SSSZ}t\", \"responseCode\": \"%s\", \"request\": \"%r\", \"responseTime\": \"%D\", \"requestMethod\": \"%m\", \"service\": \"vtj-test-ws\", \"environment\": \"${env.name}\", \"customer\": \"OPH\", \"user-agent\": \"%{User-Agent}i\", \"x-forwarded-for\": \"%{X-Forwarded-For}i\", \"x-real-ip\": \"%{X-Real-IP}i\", \"remote-ip\": \"%a\",  \"response-size\": \"%B\", \"referer\": \"%{Referer}i\"}"
@@ -37,7 +37,7 @@ logging.level.root: "${env_loglevel:INFO}"
 vtj-test-ws:
   datastore:
     oppijanumerorekisteri:
-      enabled: ${vtj-test-ws.datastore.oppijanumerorekisteri-enabled:false}
-      host: "${vtj-test-ws.datastore.oppijanumerorekisteri-host:${host_alb:'http://oppijanumerorekisteri'}}"
-      username: "${vtj-test-ws.datastore.oppijanumerorekisteri-username:${ssm_vtj_test_ws_onr_username:'not_used'}}"
-      password: "${vtj-test-ws.datastore.oppijanumerorekisteri-password:${ssm_vtj_test_ws_onr_password:'not_used'}}"
+      enabled: ${vtj_oppijanumerorekisteri_enabled:false}
+      host: "${vtj_oppijanumerorekisteri_host:${host_alb:'http://oppijanumerorekisteri'}}"
+      username: "${vtj_oppijanumerorekisteri_username:${ssm_vtj_oppijanumerorekisteri_username:'not_used'}}"
+      password: "${vtj_oppijanumerorekisteri_password:${ssm_vtj_oppijanumerorekisteri_password:'not_used'}}"

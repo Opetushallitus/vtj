@@ -9,12 +9,12 @@ services:
   vtj-test-ws:
     build: ./vtj-test-ws
     environment:
-      - vtj-test-ws.ssl-enabled=true
-      - vtj-test-ws.client-auth=want
-      - vtj-test-ws.datastore.oppijanumerorekisteri-enabled
-      - vtj-test-ws.datastore.oppijanumerorekisteri-host
-      - vtj-test-ws.datastore.oppijanumerorekisteri-username
-      - vtj-test-ws.datastore.oppijanumerorekisteri-password
+      - vtj_testws_ssl_enabled=true
+      - vtj_testws_client_auth=want
+      - vtj_oppijanumerorekisteri_enabled
+      - vtj_oppijanumerorekisteri_host
+      - vtj_oppijanumerorekisteri_username
+      - vtj_oppijanumerorekisteri_password
 #      - JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,address=*:8001,server=y,suspend=n"
 #    ports:
 #      - "8001:8001"
