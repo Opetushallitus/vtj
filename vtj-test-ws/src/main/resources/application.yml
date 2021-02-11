@@ -40,3 +40,5 @@ vtj-test-ws:
     host: "${vtj.testws.oppijanumerorekisteri.host:'http://oppijanumerorekisteri'}"
     username: "${vtj.testws.oppijanumerorekisteri.username:${ssm_vtj_oppijanumerorekisteri_username:'not_used'}}"
     password: "${vtj.testws.oppijanumerorekisteri.password:${ssm_vtj_oppijanumerorekisteri_password:'not_used'}}"
+  cas:
+    host: "${host.cas:${vtj-test-ws.oppijanumerorekisteri.host}}"
