@@ -37,8 +37,8 @@ logging.level.root: "${env_loglevel:INFO}"
 vtj-test-ws:
   oppijanumerorekisteri:
     enabled: ${vtj.testws.oppijanumerorekisteri.enabled:false}
-    host: "${vtj.testws.oppijanumerorekisteri.host:'http://oppijanumerorekisteri'}"
+    address: "${vtj.testws.oppijanumerorekisteri.address:'http://oppijanumerorekisteri/oppijanumerorekisteri-service'}"
     username: "${vtj.testws.oppijanumerorekisteri.username:${ssm_vtj_oppijanumerorekisteri_username:'not_used'}}"
     password: "${vtj.testws.oppijanumerorekisteri.password:${ssm_vtj_oppijanumerorekisteri_password:'not_used'}}"
   cas:
-    host: "${host.cas:${vtj-test-ws.oppijanumerorekisteri.host}}"
+    url: "${web.url.cas:'define_this_if_onr_enabled'}"

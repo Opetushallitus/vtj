@@ -26,7 +26,7 @@ vtj.testws.key-alias={{vtj_testws_key_alias | default('vtj-test-ws')}}
 vtj.testws.key-password={{vtj_keystore_password | default('password')}}
 vtj.testws.client-auth={{vtj_testws_client_auth | default('none')}}
 vtj.testws.oppijanumerorekisteri.enabled={{vtj_oppijanumerorekisteri_enabled | default('false')}}
-vtj.testws.oppijanumerorekisteri.host={{host_virkailija}}
+vtj.testws.oppijanumerorekisteri.address=https\://{{host_virkailija}}/oppijanumerorekisteri-service
 vtj.testws.oppijanumerorekisteri.username={{vtj_oppijanumerorekisteri_username | default('not_used')}}
 vtj.testws.oppijanumerorekisteri.password={{vtj_oppijanumerorekisteri_password | default('not_used')}}
 

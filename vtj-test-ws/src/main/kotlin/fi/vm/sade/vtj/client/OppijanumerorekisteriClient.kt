@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 @Component
 class OppijanumerorekisteriClient(
         @Autowired val onrHttpClient: OphHttpClient,
-        @Value("\${vtj-test-ws.oppijanumerorekisteri.host}") val onrHost: String,
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.address}") val onrAddress: String,
         @Autowired val objectMapper: ObjectMapper
 ) {
 
@@ -27,7 +27,7 @@ class OppijanumerorekisteriClient(
     private val henkiloHelper = HenkiloHelper()
 
     fun getByHetu(henkilotunnus: String): Henkilo? {
-        val address = onrHost + HETU_HAKU_PATH_PATTERN.format(henkilotunnus)
+        val address = onrAddress + HETU_HAKU_PATH_PATTERN.format(henkilotunnus)
         val henkiloRequest = OphHttpRequest.Builder.get(address).build()
         val henkiloDto = onrHttpClient.execute<HenkiloReadDto>(henkiloRequest)
                 .expectedStatus(200, 204, 404)
@@ -35,7 +35,7 @@ class OppijanumerorekisteriClient(
                 .orElse(null)
                 ?: return null
         logger.info("Oppijanumerorekisteristä löytyi oppija: ${henkiloDto.oidHenkilo}")
-        val huoltajatAddress = onrHost + HUOLTAJA_HAKU_PATH_PATTERN.format(henkiloDto.oidHenkilo)
+        val huoltajatAddress = onrAddress + HUOLTAJA_HAKU_PATH_PATTERN.format(henkiloDto.oidHenkilo)
         val huoltajatRequest = OphHttpRequest.Builder.get(huoltajatAddress).build()
         val huoltajat = onrHttpClient.execute<List<HuoltajaDto>>(huoltajatRequest)
                 .expectedStatus(200, 204, 404)
@@ -101,7 +101,7 @@ class OppijanumerorekisteriClient(
 
 }
 
-const val HETU_HAKU_PATH_PATTERN = "/oppijanumerorekisteri-service/henkilo/hetu=%s"
-const val HUOLTAJA_HAKU_PATH_PATTERN = "/oppijanumerorekisteri-service/henkilo/%s/huoltajat"
+const val HETU_HAKU_PATH_PATTERN = "/henkilo/hetu=%s"
+const val HUOLTAJA_HAKU_PATH_PATTERN = "/henkilo/%s/huoltajat"
 const val YHTEYSTIETOTYYPPI_KOTIMAINEN_OSOITE = "yhteystietotyyppi4"
 const val YHTEYSTIETOTYYPPI_ULKOMAINEN_OSOITE = "yhteystietotyyppi5"

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class OphHttpClientConfig(
-        @Value("\${vtj-test-ws.cas.host}") val casHost: String,
-        @Value("\${vtj-test-ws.oppijanumerorekisteri.host}") val onrHost: String,
+        @Value("\${vtj-test-ws.cas.url}") val casUrl: String,
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.address}") val onrAddress: String,
         @Value("\${vtj-test-ws.oppijanumerorekisteri.username}") val onrUsername: String,
         @Value("\${vtj-test-ws.oppijanumerorekisteri.password}") val onrPassword: String
 ) {
@@ -19,8 +19,8 @@ class OphHttpClientConfig(
         val authenticator = CasAuthenticator.Builder()
                 .username(onrUsername)
                 .password(onrPassword)
-                .webCasUrl(casHost + CAS_PATH)
-                .casServiceUrl(onrHost + CAS_SERVICE_PATH)
+                .webCasUrl(casUrl)
+                .casServiceUrl(onrAddress + CAS_SERVICE_PATH)
                 .build()
         return OphHttpClient.Builder(CALLER_ID).authenticator(authenticator).build()
     }
@@ -28,5 +28,4 @@ class OphHttpClientConfig(
 }
 
 const val CALLER_ID = "1.2.246.562.10.00000000001.vtj-test-ws"
-const val CAS_PATH = "/cas"
-const val CAS_SERVICE_PATH = "/oppijanumerorekisteri-service/j_spring_cas_security_check"
+const val CAS_SERVICE_PATH = "/j_spring_cas_security_check"

@@ -12,9 +12,10 @@ services:
       - vtj.testws.ssl-enabled=true
       - vtj.testws.client-auth=want
       - vtj.testws.oppijanumerorekisteri.enabled
-      - vtj.testws.oppijanumerorekisteri.host
+      - vtj.testws.oppijanumerorekisteri.address
       - vtj.testws.oppijanumerorekisteri.username
       - vtj.testws.oppijanumerorekisteri.password
+      - web.url.cas
 #      - JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,address=*:8001,server=y,suspend=n"
 #    ports:
 #      - "8001:8001"
