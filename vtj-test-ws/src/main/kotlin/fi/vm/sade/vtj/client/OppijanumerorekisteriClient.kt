@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 @Component
 class OppijanumerorekisteriClient(
         @Autowired val onrHttpClient: OphHttpClient,
-        @Value("\${vtj-test-ws.datastore.oppijanumerorekisteri.host}") val onrHost: String,
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.host}") val onrHost: String,
         @Autowired val objectMapper: ObjectMapper
 ) {
 

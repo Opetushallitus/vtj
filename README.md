@@ -20,17 +20,30 @@ kaivettavissa em. konffitiedostoista.
 
 Pelkkää `vtj-test-ws`:ää voi ajaa Mavenilla sen omasta hakemistolla: `mvn spring-boot:run`.
 
-## SSL ja sertifikaattiautentikaatio
+
+## Konfigurointi
+
+Itse VTJ-serviceä konfiguroidaan samaan tapaan, kuin valtaosaa projekteista: sen Spring-konfiguraatioissa viitataan
+property placeholdereihin, joiden arvot otetaan templaatin pohjalta luotavasta tiedostosta. Ks. tiedosto
+`vtj-service.properties.template` juuriprojektin resourcesissa. Templaattiin tuodaan muuttujat ympäristön
+`opintopolku.yml`:stä, sekä AWS:n salaisuuksista.
+
+Spring Bootilla toteutettu `vtj-test-service` käyttää `application.yml`:ssä placeholdereita, joiden arvot luetaan
+`Environment`:istä, johon on yhdistetty myös em. `vtj-service.properties`. Ks. `VtjPropertiesEnvironmentPostProcessor`.
+
+### SSL ja sertifikaattiautentikaatio
 
 Tuotannossa VTJ:n web service vaatii SSL-salauksen, sekä sertifikaattiautentikaation. Lokaalisti ajaessa ne ovat
 oletusarvoisesti käytössä, mutta testiympäristöissä eivät. Ks. `docker-compose.yml` ja `vtj-test-ws/pom.xml`.
 
 
-## Oppijanumerorekisteri-integraatio
+### Oppijanumerorekisteri-integraatio
 
-Web servicen voi asettaa "ONR-läpilukutilaan", jolloin se etsii oman tietokantansa lisäksi henkilöitä oppijanumerorekisteristä. Ks. `.env` ja `HenkiloService`.
+Web servicen voi asettaa "ONR-läpilukutilaan", jolloin se etsii oman tietokantansa lisäksi henkilöitä
+oppijanumerorekisteristä. Esimerkkejä ja toimintalogiikka: ks. `.env` ja `HenkiloService`.
 
 
-## Debuggaaminen
+### Debuggaaminen
 
-Kontissa ajaessa debuggaus vaatii `JAVA_TOOL_OPTIONS` -ympäristömuuttujan asettamista, sekä siinä määritellyn portin avaamista. Ks. `docker-compose.yml`.
+Kontissa ajaessa debuggaus vaatii `JAVA_TOOL_OPTIONS` -ympäristömuuttujan asettamista, sekä siinä määritellyn portin
+avaamista. Esimerkki poiskommentoituna `docker-compose.yml`:issä.

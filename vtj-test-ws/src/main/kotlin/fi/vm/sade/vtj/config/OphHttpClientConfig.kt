@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class OphHttpClientConfig(
-        @Value("\${vtj-test-ws.datastore.oppijanumerorekisteri.host}") val onrHost: String,
-        @Value("\${vtj-test-ws.datastore.oppijanumerorekisteri.username}") val onrUsername: String,
-        @Value("\${vtj-test-ws.datastore.oppijanumerorekisteri.password}") val onrPassword: String
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.host}") val onrHost: String,
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.username}") val onrUsername: String,
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.password}") val onrPassword: String
 ) {
 
     @Bean

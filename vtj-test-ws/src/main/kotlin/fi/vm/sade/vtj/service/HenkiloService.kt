@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 class HenkiloService(
         @Autowired val henkiloRepository: HenkiloRepository,
         @Autowired val onrClient: OppijanumerorekisteriClient,
-        @Value("\${vtj-test-ws.datastore.oppijanumerorekisteri.enabled}") val onrEnabled: Boolean
+        @Value("\${vtj-test-ws.oppijanumerorekisteri.enabled}") val onrEnabled: Boolean
 ) {
 
     private val logger = LoggerFactory.getLogger(HenkiloService::class.java)
