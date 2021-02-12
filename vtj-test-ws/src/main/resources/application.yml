@@ -1,13 +1,13 @@
 server:
   ssl:
-    enabled: ${vtj-test-ws.ssl-enabled:false}
-    trust-store: "${vtj-test-ws.trust-store:/root/oph-environment/authentication/vtj-service/truststore.p12}"
-    trust-store-password: "${ssm_vtj_truststore_password:password}"
-    key-store: "${vtj-test-ws.key-store:/root/oph-environment/authentication/vtj-service/keystore.p12}"
-    key-store-password: "${ssm_vtj_keystore_password:password}"
-    key-alias: "${vtj-test-ws.key-alias:vtj-test-ws}"
-    key-password: "${ssm_vtj_keystore_password:password}"
-    client-auth: ${vtj-test-ws.client-auth:none}
+    enabled: ${vtj.testws.ssl-enabled:false}
+    trust-store: "${vtj.truststore.file:/root/oph-environment/authentication/vtj-service/truststore.p12}"
+    trust-store-password: "${vtj.truststore.password:password}"
+    key-store: "${vtj.keystore.file:/root/oph-environment/authentication/vtj-service/keystore.p12}"
+    key-store-password: "${vtj.keystore.password:password}"
+    key-alias: "${vtj.testws.key-alias:vtj-test-ws}"
+    key-password: "${vtj.testws.key-password:password}"
+    client-auth: ${vtj.testws.client-auth:none}
     # TLSv1.3 ei tue optionaalista client-sertiä ("want")
     enabled-protocols: [TLSv1.2]
   servlet:
@@ -15,7 +15,7 @@ server:
   tomcat:
     accesslog:
             enabled: true
-            directory: "${vtj-test-ws.access-log-dir:${user.home}/logs}"
+            directory: "${vtj.testws.accesslog-dir:${user.home}/logs}"
             prefix: "access_vtj-test-ws"
             suffix: ".log"
             pattern: "{\"timestamp\": \"%{yyyy-MM-dd'T'HH:mm:ss.SSSZ}t\", \"responseCode\": \"%s\", \"request\": \"%r\", \"responseTime\": \"%D\", \"requestMethod\": \"%m\", \"service\": \"vtj-test-ws\", \"environment\": \"${env.name}\", \"customer\": \"OPH\", \"user-agent\": \"%{User-Agent}i\", \"x-forwarded-for\": \"%{X-Forwarded-For}i\", \"x-real-ip\": \"%{X-Real-IP}i\", \"remote-ip\": \"%a\",  \"response-size\": \"%B\", \"referer\": \"%{Referer}i\"}"
@@ -34,3 +34,11 @@ management:
     health:
       enabled: true
 logging.level.root: "${env_loglevel:INFO}"
+vtj-test-ws:
+  oppijanumerorekisteri:
+    enabled: ${vtj.testws.oppijanumerorekisteri.enabled:false}
+    address: "${vtj.testws.oppijanumerorekisteri.address:'http://oppijanumerorekisteri/oppijanumerorekisteri-service'}"
+    username: "${vtj.testws.oppijanumerorekisteri.username:${ssm_vtj_oppijanumerorekisteri_username:'not_used'}}"
+    password: "${vtj.testws.oppijanumerorekisteri.password:${ssm_vtj_oppijanumerorekisteri_password:'not_used'}}"
+  cas:
+    url: "${web.url.cas:'define_this_if_onr_enabled'}"

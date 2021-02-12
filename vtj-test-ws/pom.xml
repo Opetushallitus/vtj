@@ -13,10 +13,11 @@
 	<description>VTJ:n web serviceä jäljittelevä testipalvelu</description>
 
 	<properties>
-		<auditlogger.version>9.0.0-SNAPSHOT</auditlogger.version>
 		<java.version>11</java.version>
 		<kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
 		<kotlin.version>1.4.10</kotlin.version>
+		<oph-javautils.version>0.5.0-SNAPSHOT</oph-javautils.version>
+		<oppijanumerorekisteri-api.version>0.5.0-SNAPSHOT</oppijanumerorekisteri-api.version>
 		<spring.boot.version>2.4.0</spring.boot.version>
 	</properties>
 
@@ -39,9 +40,14 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>fi.vm.sade</groupId>
-			<artifactId>auditlogger</artifactId>
-			<version>${auditlogger.version}</version>
+			<groupId>fi.vm.sade.oppijanumerorekisteri</groupId>
+			<artifactId>oppijanumerorekisteri-api</artifactId>
+			<version>${oppijanumerorekisteri-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fi.vm.sade.java-utils</groupId>
+			<artifactId>java-http</artifactId>
+			<version>${oph-javautils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -75,6 +81,10 @@
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -90,6 +100,11 @@
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>spring-ws-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -108,12 +123,11 @@
 					<mainClass>fi.vm.sade.vtj.VtjWebServiceApplicationKt</mainClass>
 					<!-- spring-boot:run system properties -->
 					<systemPropertyVariables>
-						<vtj-test-ws.access-log-dir>${basedir}/logs</vtj-test-ws.access-log-dir>
-						<vtj-test-ws.audit-log-file>${basedir}/logs/auditlog_vtj-test-ws.log</vtj-test-ws.audit-log-file>
-						<vtj-test-ws.ssl-enabled>true</vtj-test-ws.ssl-enabled>
-						<vtj-test-ws.client-auth>want</vtj-test-ws.client-auth>
-						<vtj-test-ws.trust-store>../dev_keys/truststore.p12</vtj-test-ws.trust-store>
-						<vtj-test-ws.key-store>../dev_keys/keystore.p12</vtj-test-ws.key-store>
+						<vtj.testws.accesslog-dir>${basedir}/logs</vtj.testws.accesslog-dir>
+						<vtj.testws.ssl-enabled>true</vtj.testws.ssl-enabled>
+						<vtj.testws.client-auth>want</vtj.testws.client-auth>
+						<vtj.truststore.file>../dev_keys/truststore.p12</vtj.truststore.file>
+						<vtj.keystore.file>../dev_keys/keystore.p12</vtj.keystore.file>
 					</systemPropertyVariables>
 				</configuration>
 				<executions>

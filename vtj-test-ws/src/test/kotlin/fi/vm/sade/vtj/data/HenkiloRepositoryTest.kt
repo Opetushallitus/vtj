@@ -1,6 +1,5 @@
-package fi.vm.sade.vtj.service
+package fi.vm.sade.vtj.data
 
-import fi.vm.sade.vtj.data.HenkiloRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
