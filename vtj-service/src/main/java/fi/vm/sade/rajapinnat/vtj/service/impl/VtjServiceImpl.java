@@ -128,7 +128,7 @@ public class VtjServiceImpl implements VtjService {
         
         if (vtjHenkilo.getKansalaisuus() != null) {
             for (Kansalaisuus vtjKansalaisuus : vtjHenkilo.getKansalaisuus()) {
-                henkilo.addKansalaisuusKoodi(vtjKansalaisuus.getKansalaisuuskoodi3());
+                henkilo.addKansalaisuusKoodi(KansallisuusKludge.korjaaVirheellinenKoodi(vtjKansalaisuus.getKansalaisuuskoodi3()));
             }
         }
         
