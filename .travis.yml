@@ -1,4 +1,8 @@
-sudo: required
+git:
+  depth: false
+branches:
+  only:
+    - master
 language: java
 jdk:
   - openjdk11
@@ -17,14 +21,21 @@ env:
     - secure: "LNdbFyj75gkolRJA44XE10Yi1xYmCjHumSQj/WF21pz0nRfuxQ6XhRtzC3mLH8mpYV8NJyTGdg/5rB1S8evl8i8xWaia4WGcCBAjNePecsvZMynMDw1MQjEy+v2CJl42LkuWbyt6zY/FRvfS1EKiSjNXITbTkV+g85UwGam/wyAHV0WvBJjovco19I0pckeGcHN798xPsnajGZPAhwl1FZxWatGS503sysxaRYLpVMBPDg91CIvhxzUMxvfO7jLoWuFqE2zhPQXeY4eS3n03LnnFMHISfjWZ511XLZGS8LW9q1PZL3xdHq0Vj8jHmQIgieLdM+RMByM1zCC5Ldnm67VM2rkgnUDqWFe+XcWVyiDaXK7sSplO+p3qIkkuKOR46QUeqJc2OhZYRtqPjGGDZrBosjQHtRcQxl1yCbfDWBrVf1Q8LFJ8eW5FaUpJAGmvObVqitaeDRvenW60ZGQvh6hqkU/jPXMesrdepa9lW+zE+nmhkc++rBLn6/E3S9KsqfiQJI9L9EN1Mw4tBUGFtgIysWEczSN2odAVLbef04xn1BMYQSBu+aL3teJULH++hOBAUmLGJjAlwvfbQfRFYKvj4RZZXNhoeLz7Xr7bpnf7l5BNRfNW/coMG/kwmUSz1fiXe5Mi2ZaW49jVfTwQkpgFZnGQNJ++p9Z0jdMvvpo="
     # AWS_SECRET_ACCESS_KEY
     - secure: "OVI5Ot5RCvPh+a6bz2v/nfg/UhDOXAG5mJNGErXbe3ijC6Vf/YtVIrDV8JYu4KDzWE5R2iJMcBBQaSbOYhjFd2LuWqZYIN+pA76D5HV3/T/ZQmmYypdu+GrqXT8aoGLgC06aLEmXxwwLrZ6EK12ijxkR4lFl6Hnn25hx+xduLvZgWFu24xmo5lYN9edT4l0l2LYFGGy9XcT3W9B6YgrBLHJALF5NreUbeZ069kgWfgH90WL2bdb1kDsOymAdlF0q5EOKx+7C/46xghIqXUKsDerqp2cdA6FojOJonpM+WXMW2xZAiYgEPRkORXm10Jq/Y9oXc+TuFlxS+hNoiSTX8eQZWt+6AK6GikOjsyp2mrkql79gPV437ssWUcVbCNBpl3zKnh9qSMmE8uRPBv0yLeovt/OqANC/qeTK2p6QqyPJdO3xLyuN78dJ9TilQa14kBRaA5XZW4LDaWoUAltkNf7B68NdJJMxabIUoo+fhTkKqeKiM0DbZ1aPW9TzG4+U0OTeLOtv7Ano7LHOd+ezb5SJs9Rr3ZcRrgMDgRzcp+7C4hkQ0OKPtPLKMmQv5hhsN61VE17Tmpr9R1Cl+itZCGgZqDwDL9FfrFn4VC7km/af9yX5cXuEs88AwFKnBbrwV5XnrqIVl5TWEcFbAYxSgW7ET6U3tFCB7ND6PEebGRo="
-
+addons:
+  sonarcloud:
+    organization: "opetushallitus"
+    token:
+      secure: "rW5PEwchQTXO0252/Su6Wr2jNwHn1M0+j1ahdyTe7qlmNFeMTvu7We3PlNHCX0Lc1pjnvDMh4uyYEyhc87VhHgHeu/jvV12M+N/iwAALKIDpo54k7g68A7z44+Yu8uqK4KtSpXE/8XgHQ/Bws3MMruY/8OYIQel0edqG4tdZ8Eu6TxMboNMHRPUcOrpeqqBZkHQZrwfy3MFyQa2VnW/5YY2Cb7MOImmkayjVHlGek575jM/LDFx+oAUI2aL1FbFJnTMQH+0KA03i50VnUgNIoSQqDdY3/gfbF1tQjx5CzNdbj08ha96x1pkVFzlg2dvJ13zu/iKJimSq14evb2SKV5ZiQDm5tpHIMbRAepHQeST5ON5j/jlP9p7YZqCwkckvUI9ZefMnDv7eiuxerAUvU7Ic1km+zrPCdZJpKmY21pwKDGUy2CTRfK8ZpRsdG6Ke5EKqNmyJUjjGS37OGyLaQHmbuqrSPcnzi4CSvn9NIF0r/DVSNjhrUTQw/XZOfOeKKrJoQERCymvnAryx3DIcTQapjInUz0qgtJUbFcH0akXciUNeY3BbMI92VEykRM/Ei1db5PtFLiBRl/y+7q6bdhfK5/AHVW1J4d+3xSH+WIVelsUWuJp1eaPjZ6T149miEhQDpAj4+Cjlb8fCiJkXh7eY7jf7WnE2aCDqWPZlaws="
+before_install:
+  - nvm install 12.18.1
+  - nvm use 12.18.1
 install:
   - git clone https://github.com/Opetushallitus/ci-tools.git
   - source ci-tools/common/setup-tools.sh
   - export ARTIFACT_NAME="vtj-service"
 
 script:
-  - mvn clean install -B -Dbranch=${TRAVIS_BRANCH} -Drevision=${TRAVIS_COMMIT} -DbuildNumber=${TRAVIS_BUILD_NUMBER}
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=Opetushallitus_vtj -B -Dbranch=${TRAVIS_BRANCH} -Drevision=${TRAVIS_COMMIT} -DbuildNumber=${TRAVIS_BUILD_NUMBER}
 
   - mv vtj-service/target/vtj-service.war $DOCKER_BUILD_DIR/artifact/
   - mv vtj-test-ws/target/vtj-test-ws.jar $DOCKER_BUILD_DIR/artifact/
