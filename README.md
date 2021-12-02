@@ -6,6 +6,26 @@ Palvelu henkilötietojen kyselemiseen väestötietojärjestelmästä. Koostuu se
 * vtj-service - palvelurajapinta kyselyjen tekemiseen
 * vtj-test-ws - webservice-toteutus testiympäristöihin
 
+## Technologies & Frameworks
+
+Below is non-exhaustive list of the key technologies & frameworks used in the project.
+
+### Backend
+
+* Spring Framework
+* Spring Boot
+* Spring Security (CAS)
+* Postgresql
+* JPA
+* Flyway
+* Swagger
+
+### Build tools
+
+* Java 11 / Kotlin
+* Maven 3
+* Docker
+
 ## Kääntäminen ja ajaminen
 
 Projekti kääntyy suorittamalla `mvn clean install`.
