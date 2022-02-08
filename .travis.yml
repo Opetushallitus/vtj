@@ -48,6 +48,7 @@ script:
   - export BASE_IMAGE="baseimage-fatjar-openjdk11:master"
   - ./ci-tools/common/pull-image.sh
   - ./ci-tools/build/build-fatjar.sh vtj-test-ws
+  - ./ci-tools/build/upload-image.sh $ARTIFACT_NAME && ./ci-tools/build/upload-image.sh vtj-test-ws
 
 deploy:
   - provider: script
@@ -55,7 +56,3 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-  - provider: script
-    script: ./ci-tools/build/upload-image.sh $ARTIFACT_NAME && ./ci-tools/build/upload-image.sh vtj-test-ws
-    on:
-      all_branches: true
