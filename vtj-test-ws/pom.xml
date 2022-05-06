@@ -16,7 +16,7 @@
         <java.version>11</java.version>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
         <kotlin.version>1.4.10</kotlin.version>
-        <oph-javautils.version>0.5.0-SNAPSHOT</oph-javautils.version>
+        <oph-javautils.version>0.6.1-SNAPSHOT</oph-javautils.version>
         <oppijanumerorekisteri-api.version>0.5.0-SNAPSHOT</oppijanumerorekisteri-api.version>
         <spring.boot.version>2.4.0</spring.boot.version>
     </properties>
