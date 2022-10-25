@@ -29,6 +29,8 @@
         <branch/>
         <revision/>
         <timestamp>${maven.build.timestamp}</timestamp><!-- war plugin tarvitsee yhä häksyn? -->
+        <sonar.organization>opetushallitus</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>**/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
