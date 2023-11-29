@@ -16,7 +16,7 @@
     <properties>
         <auditlog.api.version>8.3.0-SNAPSHOT</auditlog.api.version>
         <cxf.version>3.4.2</cxf.version>
-        <ehcache.version>2.5.2</ehcache.version>
+        <ehcache.version>2.6.11</ehcache.version>
         <generic.version>9.5-SNAPSHOT</generic.version>
         <jersey.version>1.19.4</jersey.version>
         <junit.version>4.13.1</junit.version>
