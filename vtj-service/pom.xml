@@ -25,7 +25,7 @@
         <servlet.version>3.0.1</servlet.version>
         <slf4j.version>1.7.32</slf4j.version>
         <spring.version>4.3.29.RELEASE</spring.version>
-        <spring.security.version>4.2.19.RELEASE</spring.security.version>
+        <spring.security.version>5.5.6</spring.security.version>
     </properties>
 
     <build>
