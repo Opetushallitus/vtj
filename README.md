@@ -1,3 +1,5 @@
+# 💀 VTJ-service on korvattu suorilla kutsuilla VTJkysely-rajapintaan esim. [Oppijanumerorekisterissä](https://github.com/Opetushallitus/oppijanumerorekisteri/tree/master/oppijanumerorekisteri-service/src/main/java/fi/vm/sade/oppijanumerorekisteri/vtjkysely) 💀
+
 # VTJ-service
 
 Palvelu henkilötietojen kyselemiseen väestötietojärjestelmästä. Koostuu seuraavista moduleista:
